@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TrickRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
@@ -18,6 +19,9 @@ class Trick
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $descritpion;
+
+    #[ORM\OneToMany(targetEntity: "Message", cascade: ["all"], fetch: "EAGER", mappedBy: "trick")]
+    private $messages;
 
     public function getId(): ?int
     {
@@ -47,4 +51,16 @@ class Trick
 
         return $this;
     }
+    public function getMessages(): ?Collection
+    {
+        return $this->messages;
+    }
+
+    public function setMessages(Collection $messages): self
+    {
+        $this->messages = $messages;
+
+        return $this;
+    }
+
 }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -22,6 +23,9 @@ class User
 
     #[ORM\Column(type: 'string', length: 100)]
     private $password;
+
+    #[ORM\OneToMany(targetEntity: "Message", cascade: ["all"], fetch: "EAGER", mappedBy: "author")]
+    private $messages;
 
     public function getId(): ?int
     {
@@ -63,4 +67,16 @@ class User
 
         return $this;
     }
+    public function getMessages(): ?Collection
+    {
+        return $this->messages;
+    }
+
+    public function setMessages(Collection $messages): self
+    {
+        $this->messages = $messages;
+
+        return $this;
+    }
+
 }

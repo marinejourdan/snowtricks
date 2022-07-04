@@ -19,8 +19,11 @@ class Message
     #[ORM\Column(type: 'datetime')]
     private $creation_date;
 
-    #[ORM\Column(type: 'string', length: 50)]
+    #[ORM\ManyToOne(targetEntity: "User", cascade: ["all"], fetch: "EAGER", inversedBy: "messages")]
     private $author;
+
+    #[ORM\ManyToOne(targetEntity: "Trick", cascade: ["all"], fetch: "EAGER", inversedBy: "messages")]
+    private $trick;
 
     public function getId(): ?int
     {
@@ -51,12 +54,12 @@ class Message
         return $this;
     }
 
-    public function getAuthor(): ?string
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(string $author): self
+    public function setAuthor(User $author): self
     {
         $this->author = $author;
 
