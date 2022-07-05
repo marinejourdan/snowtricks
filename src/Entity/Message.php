@@ -65,4 +65,16 @@ class Message
 
         return $this;
     }
+
+    public function getTrick(): ?string
+    {
+        return $this->trick;
+    }
+
+    public function setTrick(string $trick): self
+    {
+        $this->trick = $trick;
+
+        return $this;
+    }
 }
