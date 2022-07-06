@@ -20,4 +20,12 @@ class trickController extends AbstractController
             'product'=> $product
         ]);
     }
+
+    #[Route(path: '/trick', name:'trick', methods: ['GET'], schemes: ['https'])]
+
+    function GetOne(){
+
+        return $this->render('oneTrick.html.twig');
+    }
 }
+
