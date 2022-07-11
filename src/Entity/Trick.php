@@ -15,7 +15,7 @@ class Trick
     private $id;
 
     #[ORM\Column(type: 'string', length: 100)]
-    private $name;
+    #[Asserts\NotBlank]private $name='prout';
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $descritpion;

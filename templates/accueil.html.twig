@@ -1,6 +1,27 @@
 {% extends "./base.html.twig" %}
         {% block body %}
-            <img src="assets/home_image.jpg" class="img-responsive center-block" alt="Responsive image" style="width:100%;">
+            <div id="fond">
+                <div id="contenu">Ici ton texte et ce que tu veux</div>
+            </div>
+
+            <h1> Les tricks  </h1>
+            <div class="row">
+                <?php foreach($params['postList'] as $post){ ?>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Nom figure</h4>
+                            <h6 class="card-text">description figure</h6>
+                            <p class="card-text"></p>
+                            <p class="card-text"></p>
+                            <a href="./oneTrick echo $trick->getId(); ?>" class="btn btn-primary">
+                                Voir la figure
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
+            </div>
 
         {% endblock %}
 
