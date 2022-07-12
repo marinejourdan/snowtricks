@@ -23,8 +23,8 @@ class Trick
     #[ORM\OneToMany(targetEntity: "Message", cascade: ["all"], fetch: "EAGER", mappedBy: "trick")]
     private $messages;
 
-   // #[ORM\OneToMany(targetEntity: "Image", cascade: ["all"], fetch: "EAGER", mappedBy: "trick")]
-   // private $medias;
+   #[ORM\OneToMany(targetEntity: "Media", cascade: ["all"], fetch: "EAGER", mappedBy: "trick")]
+    private $medias;
 
     #[ORM\ManyToOne(targetEntity: "group", cascade: ["all"], fetch: "EAGER", inversedBy: "tricks")]
     private $group;
@@ -70,21 +70,21 @@ class Trick
         return $this;
     }
 
-   // public function getMedias(): ?Collection
-  //  {
-    //    return $this->medias;
- //   }
+   public function getMedias(): ?Collection
+   {
+        return $this->medias;
+   }
 
-   // public function setMedias(Collection $medias): self
-   // {
-    //    $this->medias = $medias;
+   public function setMedias(Collection $medias): self
+    {
+       $this->medias = $medias;
 
-      //  return $this;
-   // }
-    //    public function getGroup(): ?Group
-   // {
-       // return $this->group;
-   // }
+       return $this;
+    }
+        public function getGroup(): ?Group
+    {
+        return $this->group;
+    }
 
     public function setGroup(Collection $group): self
     {

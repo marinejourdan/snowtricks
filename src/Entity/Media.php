@@ -16,8 +16,11 @@ class Media
     #[ORM\Column(type: 'text')]
     private $type;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\ManyToOne(targetEntity: "Trick", cascade: ["all"], fetch: "EAGER", inversedBy: "medias")]
     private $trick;
+
+    #[ORM\ManyToOne(targetEntity: "User", cascade: ["all"], fetch: "EAGER", inversedBy: "medias")]
+    private $user;
 
     #[ORM\Column(type: 'text')]
     private $url;
@@ -39,14 +42,26 @@ class Media
         return $this;
     }
 
-    public function isTrick(): ?bool
+    public function getTrick(): ?Trick
     {
         return $this->trick;
     }
 
-    public function setTrick(bool $trick): self
+    public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->trick = $user;
 
         return $this;
     }

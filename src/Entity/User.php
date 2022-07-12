@@ -29,8 +29,8 @@ class User {
     #[ORM\OneToMany(targetEntity: "Message", cascade: ["all"], fetch: "EAGER", mappedBy: "author")]
     private $messages;
 
-    //#[ORM\OneToMany(targetEntity: "media", cascade: ["all"], fetch: "EAGER", mappedBy: "user")]
-   // private $medias;
+    #[ORM\OneToMany(targetEntity: "media", cascade: ["all"], fetch: "EAGER", mappedBy: "user")]
+    private $medias;
 
     public function getId(): ?int
     {
@@ -94,15 +94,15 @@ class User {
 
         return $this;
     }
-  //  public function getMedias(): ?Collection
-    //{
-       // return $this->medias;
-    //}
+    public function getMedias(): ?Collection
+    {
+        return $this->medias;
+    }
 
-  //  public function setMedias(Collection $medias): self
-    //{
-      //  $this->medias = $medias;
+    public function setMedias(Collection $medias): self
+    {
+        $this->medias = $medias;
 
-        //return $this;
-    //}
+        return $this;
+    }
 }
