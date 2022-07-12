@@ -86,7 +86,7 @@ class Trick
         return $this->group;
     }
 
-    public function setGroup(Collection $group): self
+    public function setGroup(Group $group): self
     {
         $this->group = $group;
 

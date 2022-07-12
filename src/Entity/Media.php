@@ -11,19 +11,19 @@ class Media
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'text')]
-    private $type;
+    private ?string $type;
 
     #[ORM\ManyToOne(targetEntity: "Trick", cascade: ["all"], fetch: "EAGER", inversedBy: "medias")]
-    private $trick;
+    private ?Trick $trick;
 
     #[ORM\ManyToOne(targetEntity: "User", cascade: ["all"], fetch: "EAGER", inversedBy: "medias")]
-    private $user;
+    private ?User $user;
 
     #[ORM\Column(type: 'text')]
-    private $url;
+    private ?string $url;
 
     public function getId(): ?int
     {
@@ -61,7 +61,7 @@ class Media
 
     public function setUser(?User $user): self
     {
-        $this->trick = $user;
+        $this->user = $user;
 
         return $this;
     }
