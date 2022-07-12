@@ -17,8 +17,8 @@ class Group
     #[ORM\Column(type: 'string', length: 100)]
     private $name;
 
-    #[ORM\Column(type: 'text', nullable: true)]
-    private $content;
+    #[ORM\OneToMany(targetEntity: "Trick", cascade: ["all"], fetch: "EAGER", mappedBy: "group")]
+    private $tricks;
 
     public function getId(): ?int
     {
@@ -37,14 +37,14 @@ class Group
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getTricks(): ?string
     {
-        return $this->content;
+        return $this->tricks;
     }
 
-    public function setContent(?string $content): self
+    public function setTricks(?string $tricks): self
     {
-        $this->content = $content;
+        $this->tricks = $tricks;
 
         return $this;
     }

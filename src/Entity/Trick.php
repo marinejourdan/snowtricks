@@ -18,10 +18,17 @@ class Trick
     #[Asserts\NotBlank]private $name='prout';
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private $descritpion;
+    private $description;
 
     #[ORM\OneToMany(targetEntity: "Message", cascade: ["all"], fetch: "EAGER", mappedBy: "trick")]
     private $messages;
+
+   // #[ORM\OneToMany(targetEntity: "Image", cascade: ["all"], fetch: "EAGER", mappedBy: "trick")]
+   // private $medias;
+
+    #[ORM\ManyToOne(targetEntity: "group", cascade: ["all"], fetch: "EAGER", inversedBy: "tricks")]
+    private $group;
+
 
     public function getId(): ?int
     {
@@ -40,14 +47,14 @@ class Trick
         return $this;
     }
 
-    public function getDescritpion(): ?string
+    public function getDescription(): ?string
     {
-        return $this->descritpion;
+        return $this->description;
     }
 
-    public function setDescritpion(?string $descritpion): self
+    public function setDescription(?string $description): self
     {
-        $this->descritpion = $descritpion;
+        $this->description = $description;
 
         return $this;
     }
@@ -59,6 +66,29 @@ class Trick
     public function setMessages(Collection $messages): self
     {
         $this->messages = $messages;
+
+        return $this;
+    }
+
+   // public function getMedias(): ?Collection
+  //  {
+    //    return $this->medias;
+ //   }
+
+   // public function setMedias(Collection $medias): self
+   // {
+    //    $this->medias = $medias;
+
+      //  return $this;
+   // }
+    //    public function getGroup(): ?Group
+   // {
+       // return $this->group;
+   // }
+
+    public function setGroup(Collection $group): self
+    {
+        $this->group = $group;
 
         return $this;
     }

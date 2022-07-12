@@ -4,24 +4,25 @@
                 <div id="contenu">Ici ton texte et ce que tu veux</div>
             </div>
 
+
             <h1> Les tricks  </h1>
-            <div class="row">
-                <?php foreach($params['postList'] as $post){ ?>
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Nom figure</h4>
-                            <h6 class="card-text">description figure</h6>
-                            <p class="card-text"></p>
-                            <p class="card-text"></p>
-                            <a href="./oneTrick echo $trick->getId(); ?>" class="btn btn-primary">
-                                Voir la figure
-                            </a>
+            {% for trick in tricks %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">{{trick.name}}</h4>
+                                <h6 class="card-text">{{trick.description}}</h6>
+                                <p class="card-text"></p>
+                                <p class="card-text"></p>
+                                <a href="{{ path('trick', {'id' : trick.id}) }}" class="btn btn-primary">
+                                    Voir la figure
+                                </a>
+                                    <a class="nav-link" href={{ path('delete', {'id' : trick.id}) }}> supprimer une figure <span class="sr-only">(current)</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <?php } ?>
-            </div>
-
+            {% endfor %}
         {% endblock %}
 

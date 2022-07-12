@@ -6,8 +6,8 @@
                     <div class="card-body">
                         <p class="card-text"></p>
                         <p class="card-text"></p>
-                        <h4 class="card-title">{#  { trick.name }#}</h4>
-                        <h6 class="card-text">{#  { trick.description }#}</h6>
+                        <h4 class="card-title">{{ trick.name }}</h4>
+                        <h6 class="card-text">{{ trick.description }}</h6>
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                     {% for message in messages %}
                         <h3>{{ message.author }}</h3>
                         <p>{{ message.content }}</p>
-                        <p>{{ message.creation_date }}</p>
+                        <p>{{ message.creationDate|date("m/d/Y") }}</p>
 
                     {% endfor %}
                 </ul>

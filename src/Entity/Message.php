@@ -17,7 +17,7 @@ class Message
     private $content;
 
     #[ORM\Column(type: 'datetime')]
-    private $creation_date;
+    private $creationDate;
 
     #[ORM\ManyToOne(targetEntity: "User", cascade: ["all"], fetch: "EAGER", inversedBy: "messages")]
     private $author;
@@ -44,12 +44,12 @@ class Message
 
     public function getCreationDate(): ?\DateTimeInterface
     {
-        return $this->creation_date;
+        return $this->creationDate;
     }
 
-    public function setCreationDate(\DateTimeInterface $creation_date): self
+    public function setCreationDate(\DateTimeInterface $creationDate): self
     {
-        $this->creation_date = $creation_date;
+        $this->creationDate = $creationDate;
 
         return $this;
     }
@@ -66,12 +66,12 @@ class Message
         return $this;
     }
 
-    public function getTrick(): ?string
+    public function getTrick(): ?Trick
     {
         return $this->trick;
     }
 
-    public function setTrick(string $trick): self
+    public function setTrick(Trick $trick): self
     {
         $this->trick = $trick;
 
