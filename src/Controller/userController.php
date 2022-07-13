@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\UserFormType;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,8 +24,10 @@ class userController extends AbstractController
 {
 
     #[Route(path: '/connexion', name: 'connexion', methods: ['GET','POST'], schemes: ['https'])]
-    public function connexion(AuthenticationUtils $authenticationUtils)
+    public function connexion(AuthenticationUtils $authenticationUtils, RequestStack $requestStack)
     {
+        //$session=$requestStack->getSession();
+      //  $session->get('username');
 
         $error=$authenticationUtils->getLastAuthenticationError();
         $username=$authenticationUtils->getLastUsername();
@@ -40,7 +43,7 @@ class userController extends AbstractController
     function suscribe(Request $request,EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher)
     {
         $user=new User();
-        $form=$this->createForm(UserFormType::class, $user);
+        $form=$this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted()&& $form->isValid()){
