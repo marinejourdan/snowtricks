@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\Collection;
+use App\Entity\Group;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
@@ -26,7 +27,7 @@ class Trick
    #[ORM\OneToMany(targetEntity: "Media", cascade: ["all"], fetch: "EAGER", mappedBy: "trick")]
     private $medias;
 
-    #[ORM\ManyToOne(targetEntity: "group", cascade: ["all"], fetch: "EAGER", inversedBy: "tricks")]
+    #[ORM\ManyToOne(targetEntity: "Group", cascade: ["all"], fetch: "EAGER", inversedBy: "tricks")]
     private $group;
 
 
