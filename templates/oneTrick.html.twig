@@ -1,0 +1,43 @@
+{% extends "./base.html.twig" %}
+        {% block body %}
+            {{ dump() }}
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text"></p>
+                        <p class="card-text"></p>
+                        <h4 class="card-title">{{ trick.name }}</h4>
+                        <h6 class="card-text">{{ trick.description }}</h6>
+                    </div>
+                </div>
+            </div>
+
+            <body class="bg-gradient-primary">
+            <div class="container">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Ajouter un message</h1>
+                                    </div>
+                                    {{ form(myform) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div> MESSAGES
+                <ul>
+                    {% for message in messages %}
+                        <h3>{{ message.author }}</h3>
+                        <p>{{ message.content }}</p>
+                        <p>{{ message.creationDate|date("m/d/Y") }}</p>
+
+                    {% endfor %}
+                </ul>
+            </div>
+            </body>
+        {% endblock %}

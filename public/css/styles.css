@@ -1,0 +1,113 @@
+/*header*/
+.header-logo{
+    max-width: 150px;
+}
+
+.navbar-expand-lg .navbar-collapse {
+    justify-content: end;
+}
+
+/*footer*/
+footer{
+    border-top-style: solid;
+}
+
+/*accueil*/
+
+#fond {
+    background:url('../assets/home_image.jpg') no-repeat center;
+    width:100%;
+    background-size: 1000px 1200px;
+}
+
+#contenu {
+    position:relative;
+    top:500;
+    left:500;
+    width:100px;
+}
+}
+
+/*debug*/
+
+.b1 {
+    background-color: red;
+}
+
+.b2 {
+    background-color: blue;
+}
+
+.b3 {
+    background-color: green;
+
+/*reset*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    display:flex;
+}
+
+body{
+    font-family:var(--font-family);
+    color:var(--color);
+
+}
+
+ul{
+    list-style: none;
+}
+
+h1,h2,h3,h4{
+    color:var(--color-dark);
+}
+/*margin*/
+
+.m-5{
+    margin:5px;
+}
+.m-10{
+    margin:10px;
+}
+.m-20{
+    margin:20px;
+}
+
+/*padding*/
+
+.p-5{
+    padding:5px;
+}
+.p-10{
+    padding:10px;
+}
+.p-20{
+    padding:20px;
+}
+
+
+/*general*/
+
+.content{
+
+}
+
+/*theme*/
+:root{
+    --primary#40407a:;
+    --primary-light:#ababd3;
+    --accent:#ffb142;
+    --warning:#b33939;
+    --success:#33d9b2;
+    --font-family:roboto, sans-serif;
+    --box-shadow:0 1px 2px 0 rgb(60 64 67 / 30%) , 0 1px 3px 1px rgb(60 64 67 /15%);
+    --border-radius:3px;
+    --color:#2c2c54;
+    --color-dark:#40407a;
+    --gray:#84817a;
+    --gray-dark:#d1ccc0;
+    --border-color:#cd6133;
+
+}
