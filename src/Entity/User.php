@@ -5,11 +5,11 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class User {
+class User implements UserInterface, \Serializable{
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -24,12 +24,10 @@ class User {
     #[ORM\Column(type: 'string', length: 100)]
     private $password;
 
-    private $plainPassword;
-
     #[ORM\OneToMany(targetEntity: "Message", cascade: ["all"], fetch: "EAGER", mappedBy: "author")]
     private $messages;
 
-    #[ORM\OneToMany(targetEntity: "media", cascade: ["all"], fetch: "EAGER", mappedBy: "user")]
+    #[ORM\OneToMany(targetEntity: "Media", cascade: ["all"], fetch: "EAGER", mappedBy: "user")]
     private $medias;
 
     public function getId(): ?int
@@ -40,6 +38,10 @@ class User {
     public function getName(): ?string
     {
         return $this->name;
+    }
+    public function getUsername()
+    {
+        return $this->getName();
     }
 
     public function setName(string $name): self
@@ -83,17 +85,7 @@ class User {
 
         return $this;
     }
-    public function getPlainPassword(): ?string
-    {
-        return $this->plainPassword;
-    }
 
-    public function setPlainPassword(string $plainPassword): self
-    {
-        $this->plainPassword = $plainPassword;
-
-        return $this;
-    }
     public function getMedias(): ?Collection
     {
         return $this->medias;
@@ -104,5 +96,43 @@ class User {
         $this->medias = $medias;
 
         return $this;
+    }
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->name,
+            $this->email,
+            $this->password,
+
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->name,
+            $this->email,
+            $this->password,
+
+            ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function eraseCredentials()
+    {
     }
 }

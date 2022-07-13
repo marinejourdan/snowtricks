@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Trick;
 use App\Entity\Message;
+use App\Entity\Group;
 use App\Form\MessageFormType;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -34,11 +35,12 @@ class trickController extends AbstractController
     #[Route(path: '/add', name:'trick', methods: ['GET','POST'], schemes: ['https'])]
 
     function add(Request $request,EntityManagerInterface $em){
+
         $trick=New Trick;
 
         $form=$this->createFormBuilder($trick)
             ->add('name', TextType::class)
-            ->add('descritpion', TextType::class)
+            ->add('description', TextType::class)
             ->add('submit', SubmitType::class)
             ->getForm()
         ;
