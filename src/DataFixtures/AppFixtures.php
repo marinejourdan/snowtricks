@@ -18,6 +18,7 @@ class AppFixtures extends Fixture
         $user_1->setName('Paul');
         $user_1->setEmail('jean.paul@gmail.com');
         $user_1->setPassword('jeanjean');
+        $user_1->setToken('prout');
 
         $manager->persist($user_1);
         $manager->flush();
@@ -29,12 +30,34 @@ class AppFixtures extends Fixture
         $manager->persist($group_1);
         $manager->flush();
 
+        $group_2 = new Group();
+        $group_2->setName('Old school');
+
+        $manager->persist($group_2);
+        $manager->flush();
+
         $trick_1 = new Trick();
         $trick_1->setName('indy');
         $trick_1->setDescription('saisie de la carre frontside de la planche, entre les deux pieds, avec la main arrière ');
         $trick_1->setGroup($group_1);
 
+        $trick_2 = new Trick();
+        $trick_2->setName('mute');
+        $trick_2->setDescription('saisie de la carre frontside de la planche entre les deux pieds avec la main avant ');
+        $trick_2->setGroup($group_1);
+
+        $trick_3 = new Trick();
+        $trick_3->setName('truck driver');
+        $trick_3->setDescription('saisie du carre avant et carre arrière avec chaque main (comme tenir un volant de voiture)');
+        $trick_3->setGroup($group_1);
+
         $manager->persist($trick_1);
+        $manager->flush();
+
+        $manager->persist($trick_2);
+        $manager->flush();
+
+        $manager->persist($trick_3);
         $manager->flush();
 
         $message = new Message();

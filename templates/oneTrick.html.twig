@@ -1,13 +1,31 @@
 {% extends "./base.html.twig" %}
         {% block body %}
             {{ dump() }}
+
+                <div class="container" id="fond_image_home">
+                    <i class="fa-solid fa-pencil"></i>
+                    <a class="fa-solid fa-trash-can" href={{ path('delete', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
+                    <img class="img-fluid" src="{{ asset('assets/home_image.jpg') }}" width="2800" height="600">
+
+
+                </div>
+
+
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-body">
+                    <h1 class="card-title">{{ trick.name }}</h1>
+                    <div class="card-body p-0">
+                        <img src="{{ asset('assets/logo.jpeg')}}" class="rounded float-left"  >
+                        <img src="{{ asset('assets/logo.jpeg')}}" class="rounded float-center" >
+                        <img src="{{ asset('assets/logo.jpeg')}}" class="rounded float-right" >
+                        <iframe width="200" height="200" src="https://www.youtube.com/embed/zJTfXSuWsw8" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe width="200" height="200" src="https://www.youtube.com/embed/zJTfXSuWsw8" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe width="200" height="200" src="https://www.youtube.com/embed/zJTfXSuWsw8" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         <p class="card-text"></p>
                         <p class="card-text"></p>
-                        <h4 class="card-title">{{ trick.name }}</h4>
                         <h6 class="card-text">{{ trick.description }}</h6>
+                        <i class="fa-solid fa-pencil"></i>
+                        <a class="fa-solid fa-trash-can" href={{ path('delete', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
                     </div>
                 </div>
             </div>
@@ -32,6 +50,7 @@
             <div> MESSAGES
                 <ul>
                     {% for message in messages %}
+
                         <h3>{{ message.author }}</h3>
                         <p>{{ message.content }}</p>
                         <p>{{ message.creationDate|date("m/d/Y") }}</p>

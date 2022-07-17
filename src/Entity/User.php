@@ -5,11 +5,14 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity('email')]
 class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -20,17 +23,29 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
     #[ORM\Column(type: 'text')]
     private $name;
 
-    #[ORM\Column(type: 'string', length: 25)]
+    #[ORM\Column(type: 'string', length: 25, unique: true)]
+    #[Assert\Email]
     private $email;
 
     #[ORM\Column(type: 'string', length: 100)]
     private $password;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $active = false;
+
+    #[ORM\Column(type: 'text')]
+    private $token;
 
     #[ORM\OneToMany(targetEntity: "Message", cascade: ["all"], fetch: "EAGER", mappedBy: "author")]
     private $messages;
 
     #[ORM\OneToMany(targetEntity: "Media", cascade: ["all"], fetch: "EAGER", mappedBy: "user")]
     private $medias;
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     public function getId(): ?int
     {
@@ -96,6 +111,29 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
     public function setMedias(Collection $medias): self
     {
         $this->medias = $medias;
+
+        return $this;
+    }
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
 
         return $this;
     }

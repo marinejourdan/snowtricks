@@ -32,7 +32,7 @@ class trickController extends AbstractController
         return $this-> render('accueil.html.twig', ['tricks'=>$tricks]);
     }
 
-    #[Route(path: '/add', name:'trick', methods: ['GET','POST'], schemes: ['https'])]
+    #[Route(path: '/add', name:'add', methods: ['GET','POST'], schemes: ['https'])]
 
     function add(Request $request,EntityManagerInterface $em){
 
@@ -70,12 +70,14 @@ class trickController extends AbstractController
 
 
         $message=New Message();
+        $user=New User;
         $message->setTrick($trick);
         $myForm=$this->createForm(MessageFormType::class, $message);
         $myForm->handleRequest($request);
         if ($myForm-> isSubmitted()&& $myForm-> isValid()) {
             $message->setcontent(0);
-            //$message->setauthor(New User);
+            $message->setauthor($user);
+            $user->setMedias();
             $message->setCreationDate(New \DateTime);
 
             $em-> persist($message);
@@ -99,13 +101,14 @@ class trickController extends AbstractController
 
 
             $id=$request->get('id');
+
             $trickRepo= $this->getDoctrine()->getRepository(Trick::class);
             $trick=$trickRepo->find($id);
-
             $em= $this->getDoctrine()->getRepository(Trick::class);
             $em->remove($trick);
+            $em->flush();
 
-        return $this->render('doDelete.html.twig');
+        return $this->render('delete.html.twig');
     }
 }
 

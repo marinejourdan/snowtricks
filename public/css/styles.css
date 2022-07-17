@@ -14,10 +14,10 @@ footer{
 
 /*accueil*/
 
-#fond {
-    background:url('../assets/home_image.jpg') no-repeat center;
-    width:100%;
-    background-size: 1000px 1200px;
+#fond_image_home {
+
+    background-color: #0a0a0a;
+
 }
 
 #contenu {

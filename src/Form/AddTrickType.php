@@ -14,6 +14,7 @@ class AddTrickType extends AbstractType
         $builder
             ->add('name')
             ->add('descritpion')
+            ->add('medias')
         ;
     }
 

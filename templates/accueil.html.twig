@@ -1,28 +1,34 @@
 {% extends "./base.html.twig" %}
         {% block body %}
-            <div id="fond">
-                <div id="contenu">Ici ton texte et ce que tu veux</div>
+            
+            <div class="container">
+                <div class="jumbotron">
+                    <img class="img-fluid" src="{{ asset('assets/home_image.jpg') }}" width="2800" height="600">
+                    <p class="lead"> src="{{ asset('assets/home_image.jpg') }}" width="2800" height="600</p>
+                </div>
             </div>
-
 
             <h1> Les tricks  </h1>
             {% for trick in tricks %}
                 <div class="row">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">{{trick.name}}</h4>
-                                <h6 class="card-text">{{trick.description}}</h6>
-                                <p class="card-text"></p>
-                                <p class="card-text"></p>
-                                <a href="{{ path('trick', {'id' : trick.id}) }}" class="btn btn-primary">
-                                    Voir la figure
-                                </a>
-                                    <a class="nav-link" href={{ path('delete', {'id' : trick.id}) }}> supprimer une figure <span class="sr-only">(current)</span></a>
-                            </div>
+                    <div class="col-sm-4">
+                        <div class="card" style="width: 35rem;">
+                             <div class="card-body">
+                                    <h4 class="card-title">{{trick.name}}</h4>
+                                    <h6 class="card-text">{{trick.description}}</h6>
+                                    <p class="card-text"></p>
+                                    <p class="card-text"></p>
+                                    <a href="{{ path('trick', {'id' : trick.id}) }}" class="btn btn-primary">
+                                        {{ trick.name}})
+                                    </a>
+                                    <i class="fa-solid fa-pencil"></i>
+                                    <a class="fa-solid fa-trash-can" href={{ path('delete', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
+                             </div>
                         </div>
                     </div>
                 </div>
+
+
             {% endfor %}
         {% endblock %}
 
