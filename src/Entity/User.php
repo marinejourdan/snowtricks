@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use phpDocumentor\Reflection\Types\Boolean;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -23,10 +24,13 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
     #[ORM\Column(type: 'text')]
     private $name;
 
-    #[ORM\Column(type: 'string', length: 25, unique: true)]
-    #[Assert\Email]
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\Email(message:'user.email.invalid')]
+    #[Assert\NotBlank(message:'user.email.not_blank')]
     private $email;
 
+    #[Assert\NotBlank(message:'user.password.not_blank')]
+    #[Assert\Length(min:6, minMessage:'password.not_good')]
     #[ORM\Column(type: 'string', length: 100)]
     private $password;
 
@@ -39,6 +43,7 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
     #[ORM\OneToMany(targetEntity: "Message", cascade: ["all"], fetch: "EAGER", mappedBy: "author")]
     private $messages;
 
+    #[Assert\Url(message:'user.media.not_valid')]
     #[ORM\OneToMany(targetEntity: "Media", cascade: ["all"], fetch: "EAGER", mappedBy: "user")]
     private $medias;
 
@@ -137,6 +142,12 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
 
         return $this;
     }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
     /** @see \Serializable::serialize() */
     public function serialize()
     {

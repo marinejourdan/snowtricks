@@ -6,6 +6,8 @@ use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\Collection;
 use App\Entity\Group;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 class Trick
@@ -13,12 +15,15 @@ class Trick
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 100)]
-    #[Asserts\NotBlank]private $name='prout';
+    #[Assert\NotBlank(message:'trick.name.not_blank')]
+    #[UniqueEntity('name')]
+    private $name='prout';
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\NotBlank(message:'trick.description.not_blank')]
     private $description;
 
     #[ORM\OneToMany(targetEntity: "Message", cascade: ["all"], fetch: "EAGER", mappedBy: "trick")]

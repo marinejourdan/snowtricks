@@ -16,6 +16,12 @@
 
 
         {{ include('partials/_header.html.twig')  }}
+        <div class="flash-success" >
+            {% for message in app.flashes('success') %}
+                {{ message }}
+            {% endfor %}
+        </div>
+
 
         <div class=" flex-fill d-flex flex-row-nowrap justify-content-center">
             <div class="content d-flex flex-row-nowrap flex-fill">
@@ -27,6 +33,7 @@
                 </div>
             </div>
         </div>
+
         {{ include('partials/_footer.html.twig')  }}
 
 

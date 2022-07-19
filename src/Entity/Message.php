@@ -14,6 +14,7 @@ class Message
     private $id;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\NotBlank(message:'message.content.not_blank')]
     private $content;
 
     #[ORM\Column(type: 'datetime')]

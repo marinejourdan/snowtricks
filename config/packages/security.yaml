@@ -21,7 +21,7 @@ security:
                 login_path: connexion
                 check_path: connexion
             logout:
-                path: app_logout
+                path: deconnexion
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -33,7 +33,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/, roles: PUBLIC_ACCESS }
+         - { path: ^/add, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

@@ -1,0 +1,24 @@
+user:
+  email:
+    invalid: Email invalide.
+    not_blank: Email vide.
+
+  password:
+    not_good: Votre mot de passe doit faire au moins 6 caractères
+    not_blank: Veuillez renseigner un mot de passe
+
+  medias:
+    not_valid: l'image doit provenir d'une URL valide
+    not_blank: Veuillez renseigner une image de profil
+
+
+trick:
+  name:
+    not_blank: Merci de renseigner le nom du trick
+  description:
+    not_blank: Merci de renseigner la description du trick
+
+
+message:
+  content:
+    not_blank: Merci de renseigner un message

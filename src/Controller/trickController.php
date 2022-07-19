@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -33,7 +34,7 @@ class trickController extends AbstractController
     }
 
     #[Route(path: '/add', name:'add', methods: ['GET','POST'], schemes: ['https'])]
-
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     function add(Request $request,EntityManagerInterface $em){
 
         $trick=New Trick;
@@ -54,6 +55,7 @@ class trickController extends AbstractController
         }
         return $this->render('addTrick.html.twig', [
             'form'=> $form->createView()
+
         ]);
     }
 
