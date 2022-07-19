@@ -21,6 +21,11 @@
                 {{ message }}
             {% endfor %}
         </div>
+        <div class="flash-fail" >
+            {% for message in app.flashes('fail') %}
+                {{ message }}
+            {% endfor %}
+        </div>
 
 
         <div class=" flex-fill d-flex flex-row-nowrap justify-content-center">

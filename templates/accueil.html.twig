@@ -1,10 +1,12 @@
 {% extends "./base.html.twig" %}
         {% block body %}
-            
-            <div class="container">
-                <div class="jumbotron">
-                    <img class="img-fluid" src="{{ asset('assets/home_image.jpg') }}" width="2800" height="600">
-                    <p class="lead"> src="{{ asset('assets/home_image.jpg') }}" width="2800" height="600</p>
+
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <div class=fond>
+                        <h1>Titre</h1>
+                        <p> <img class="img-fluid" src="{{ asset('assets/home_image.jpg') }}" width="2800" height="600"></p>
+                    </div>
                 </div>
             </div>
 
@@ -18,12 +20,12 @@
                                     <h6 class="card-text">{{trick.description}}</h6>
                                     <p class="card-text"></p>
                                     <p class="card-text"></p>
-                                    <a href="{{ path('trick', {'id' : trick.id}) }}" class="btn btn-primary">
-                                        {{ trick.name}})
+                                    <a href="{{ path('trick', {id: trick.id}) }}" class="btn btn-primary">
+                                        voir le détail du trick
                                     </a>
-                                    <i class="fa-solid fa-pencil"></i>
                                     <a class="fa-solid fa-trash-can" href={{ path('delete', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
-                             </div>
+                                    <a class="fa-solid  fa-pencil" href={{ path('update', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
+                                </div>
                         </div>
                     </div>
                 </div>

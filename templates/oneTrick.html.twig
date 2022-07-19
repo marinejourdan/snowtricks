@@ -2,14 +2,10 @@
         {% block body %}
             {{ dump() }}
 
-                <div class="container" id="fond_image_home">
-                    <i class="fa-solid fa-pencil"></i>
-                    <a class="fa-solid fa-trash-can" href={{ path('delete', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
-                    <img class="img-fluid" src="{{ asset('assets/home_image.jpg') }}" width="2800" height="600">
-
-
-                </div>
-
+            <div class="container" id="fond_image_home">
+                <a class="fa-solid fa-trash-can" href={{ path('delete', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
+                <a class="fa-solid  fa-pencil" href={{ path('update', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>                    <img class="img-fluid" src="{{ asset('assets/home_image.jpg') }}" width="2800" height="600">
+            </div>
 
             <div class="col-sm-6">
                 <div class="card">
@@ -24,8 +20,6 @@
                         <p class="card-text"></p>
                         <p class="card-text"></p>
                         <h6 class="card-text">{{ trick.description }}</h6>
-                        <i class="fa-solid fa-pencil"></i>
-                        <a class="fa-solid fa-trash-can" href={{ path('delete', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
                     </div>
                 </div>
             </div>

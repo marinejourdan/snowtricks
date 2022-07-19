@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\AddTrickType;
+use App\Form\UpdateTrickType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -34,17 +36,18 @@ class trickController extends AbstractController
     }
 
     #[Route(path: '/add', name:'add', methods: ['GET','POST'], schemes: ['https'])]
+    #[Route(path: '/update/{id}', name:'update', methods: ['GET','POST'], schemes: ['https'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    function add(Request $request,EntityManagerInterface $em){
 
+    public function add(Request $request,EntityManagerInterface $em, ?int $id){
+
+        if ($id){
+            $trick= $trickRepo= $this->getDoctrine()->getRepository(Trick::class);
+            $trick=$trickRepo->find($id);
+        }else{
         $trick=New Trick;
-
-        $form=$this->createFormBuilder($trick)
-            ->add('name', TextType::class)
-            ->add('description', TextType::class)
-            ->add('submit', SubmitType::class)
-            ->getForm()
-        ;
+        }
+        $form=$this->createForm(AddTrickType::class, $trick);
 
         $form->handleRequest($request);
 
@@ -55,9 +58,10 @@ class trickController extends AbstractController
         }
         return $this->render('addTrick.html.twig', [
             'form'=> $form->createView()
-
         ]);
     }
+
+
 
     #[Route(path: '/trick/details/{id}', name: 'trick', methods: ['GET|POST'], schemes: ['https'])]
     public function getOne(Request $request, EntityManagerInterface $em){
@@ -98,19 +102,19 @@ class trickController extends AbstractController
 
     }
 
-    #[Route(path: '/delete/{id}', name: 'delete', methods: ['GET|POST'], schemes: ['https'])]
-        public function doDelete(Request $request, EntityManagerInterface $em){
-
+    #[Route(path: '/trick/delete/{id}', name: 'delete', methods: ['GET|POST'], schemes: ['https'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+        public function delete(Request $request,int $id){
 
             $id=$request->get('id');
+            $trick= $this->getDoctrine()->getRepository(Trick::class)->find($id);
 
-            $trickRepo= $this->getDoctrine()->getRepository(Trick::class);
-            $trick=$trickRepo->find($id);
-            $em= $this->getDoctrine()->getRepository(Trick::class);
+            $em= $this->getDoctrine()->getRepository(Trick::class );
             $em->remove($trick);
-            $em->flush();
 
-        return $this->render('delete.html.twig');
+        return $this->render('doDelete.html.twig');
+        return $this-> redirectToRoute('index');
     }
+
 }
 
