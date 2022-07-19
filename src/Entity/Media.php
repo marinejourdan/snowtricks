@@ -16,10 +16,10 @@ class Media
     #[ORM\Column(type: 'text')]
     private ?string $type;
 
-    #[ORM\ManyToOne(targetEntity: "Trick", cascade: ["all"], fetch: "EAGER", inversedBy: "medias")]
+    #[ORM\ManyToOne(targetEntity: "Trick", fetch: "EAGER", inversedBy: "medias")]
     private ?Trick $trick;
 
-    #[ORM\ManyToOne(targetEntity: "User", cascade: ["all"], fetch: "EAGER", inversedBy: "medias")]
+    #[ORM\ManyToOne(targetEntity: "User", fetch: "EAGER", inversedBy: "medias")]
     private ?User $user;
 
     #[ORM\Column(type: 'text')]

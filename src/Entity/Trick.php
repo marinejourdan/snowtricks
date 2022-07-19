@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
+#[UniqueEntity('name')]
 class Trick
 {
     #[ORM\Id]
@@ -19,20 +20,19 @@ class Trick
 
     #[ORM\Column(type: 'string', length: 100)]
     #[Assert\NotBlank(message:'trick.name.not_blank')]
-    #[UniqueEntity('name')]
     private $name='prout';
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Assert\NotBlank(message:'trick.description.not_blank')]
     private $description;
 
-    #[ORM\OneToMany(targetEntity: "Message", cascade: ["all"], fetch: "EAGER", mappedBy: "trick")]
+    #[ORM\OneToMany(targetEntity: "Message", cascade: ["remove"], fetch: "EAGER", mappedBy: "trick")]
     private $messages;
 
-   #[ORM\OneToMany(targetEntity: "Media", cascade: ["all"], fetch: "EAGER", mappedBy: "trick")]
+   #[ORM\OneToMany(targetEntity: "Media", cascade: ["persist", "remove"], fetch: "EAGER", mappedBy: "trick")]
     private $medias;
 
-    #[ORM\ManyToOne(targetEntity: "Group", cascade: ["all"], fetch: "EAGER", inversedBy: "tricks")]
+    #[ORM\ManyToOne(targetEntity: "Group", fetch: "EAGER", inversedBy: "tricks")]
     private $group;
 
 

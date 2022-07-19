@@ -1,3 +1,7 @@
+{% extends "./base.html.twig" %}
+    {% block body %}
 ETES VOUS SUR DE VOULOIR SUPPRIMER LA FIGURE?
 
-<a href="{{ path('delete',{ id:trick.id}) }}">oui</a>
+{{ form(form) }}
+
+    {% endblock %}

@@ -40,11 +40,11 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
     #[ORM\Column(type: 'text')]
     private $token;
 
-    #[ORM\OneToMany(targetEntity: "Message", cascade: ["all"], fetch: "EAGER", mappedBy: "author")]
+    #[ORM\OneToMany(targetEntity: "Message", cascade: ["remove"], fetch: "EAGER", mappedBy: "author")]
     private $messages;
 
     #[Assert\Url(message:'user.media.not_valid')]
-    #[ORM\OneToMany(targetEntity: "Media", cascade: ["all"], fetch: "EAGER", mappedBy: "user")]
+    #[ORM\OneToMany(targetEntity: "Media", cascade: ["persist", "remove"], fetch: "EAGER", mappedBy: "user")]
     private $medias;
 
     public function __toString()

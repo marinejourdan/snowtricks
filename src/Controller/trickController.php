@@ -7,9 +7,12 @@ use App\Form\AddTrickType;
 use App\Form\UpdateTrickType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Button;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -45,7 +48,7 @@ class trickController extends AbstractController
             $trick= $trickRepo= $this->getDoctrine()->getRepository(Trick::class);
             $trick=$trickRepo->find($id);
         }else{
-        $trick=New Trick;
+            $trick=New Trick;
         }
         $form=$this->createForm(AddTrickType::class, $trick);
 
@@ -104,16 +107,29 @@ class trickController extends AbstractController
 
     #[Route(path: '/trick/delete/{id}', name: 'delete', methods: ['GET|POST'], schemes: ['https'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-        public function delete(Request $request,int $id){
+    public function delete(Request $request, EntityManagerInterface $em){
 
             $id=$request->get('id');
             $trick= $this->getDoctrine()->getRepository(Trick::class)->find($id);
 
-            $em= $this->getDoctrine()->getRepository(Trick::class );
-            $em->remove($trick);
+            $form = $this->createFormBuilder()
+            ->add('oui', SubmitType::class)
+            ->getForm();
+            $form->handleRequest($request);
 
-        return $this->render('doDelete.html.twig');
-        return $this-> redirectToRoute('index');
+            if($form->isSubmitted() && $form->isValid()) {
+
+                $em->remove($trick);
+                //dd($trick);
+                $em->flush();
+                return $this-> redirectToRoute('index');
+            }
+
+        return $this->render('doDelete.html.twig',[
+            'trick'=> $trick,
+            'form' => $form->createView(),
+        ]);
+
     }
 
 }

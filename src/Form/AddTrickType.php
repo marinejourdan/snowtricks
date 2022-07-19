@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Trick;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,8 +14,9 @@ class AddTrickType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('descritpion')
-            ->add('medias')
+            ->add('description')
+            //->add('medias')
+            ->add('submit', SubmitType::class)
         ;
     }
 

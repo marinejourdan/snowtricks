@@ -18,7 +18,7 @@ class Group
     #[ORM\Column(type: 'string', length: 100)]
     private $name;
 
-    #[ORM\OneToMany(targetEntity: "Trick", cascade: ["all"], fetch: "EAGER", mappedBy: "group")]
+    #[ORM\OneToMany(targetEntity: "Trick", fetch: "EAGER", mappedBy: "group")]
     private $tricks;
 
     public function getId(): ?int

@@ -20,10 +20,10 @@ class Message
     #[ORM\Column(type: 'datetime')]
     private $creationDate;
 
-    #[ORM\ManyToOne(targetEntity: "User", cascade: ["all"], fetch: "EAGER", inversedBy: "messages")]
+    #[ORM\ManyToOne(targetEntity: "User", fetch: "EAGER", inversedBy: "messages")]
     private $author;
 
-    #[ORM\ManyToOne(targetEntity: "Trick", cascade: ["all"], fetch: "EAGER", inversedBy: "messages")]
+    #[ORM\ManyToOne(targetEntity: "Trick", fetch: "EAGER", inversedBy: "messages")]
     private $trick;
 
     public function getId(): ?int
