@@ -47,9 +47,7 @@ class userController extends AbstractController
         if($form->isSubmitted()&& $form->isValid()){
             return $this->redirectToRoute('index');
             $session->getFlashBag()->add('success', 'vous vous êtes bien authentifié');
-
          }
-
     }
 
     #[Route(path: '/suscribe', name: 'suscribe', methods: ['GET','POST'], schemes: ['https'])]
@@ -58,7 +56,6 @@ class userController extends AbstractController
         $user=new User();
         $form=$this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
 
         if($form->isSubmitted()&& $form->isValid()){
             $this->addFlash('success', 'votre inscription a bien été prise en compte');
@@ -177,7 +174,6 @@ class userController extends AbstractController
         //On verifie si un utilisateur a ce token
         $user = $userRepo->findOneBy(['token' => $token]);
 
-        //Si aucun utilisateur n'existe avec ce token
         if (!$user) {
             //Erreur 404
             throw $this->createNotFoundException('Cet utilisateur n\'existe pas');

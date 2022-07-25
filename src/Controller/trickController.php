@@ -7,6 +7,7 @@ use App\Form\AddTrickType;
 use App\Form\UpdateTrickType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Cocur\Slugify\Slugify;
 use Symfony\Component\Form\Button;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -28,7 +29,6 @@ use Doctrine\ORM\EntityManagerInterface;
 class trickController extends AbstractController
 {
 
-
     #[Route(path: '/', name:'index', methods: ['GET'], schemes: ['https'])]
     public function getList(){
 
@@ -45,25 +45,24 @@ class trickController extends AbstractController
     public function add(Request $request,EntityManagerInterface $em, ?int $id){
 
         if ($id){
-            $trick= $trickRepo= $this->getDoctrine()->getRepository(Trick::class);
+            $trickRepo= $this->getDoctrine()->getRepository(Trick::class);
             $trick=$trickRepo->find($id);
         }else{
             $trick=New Trick;
         }
         $form=$this->createForm(AddTrickType::class, $trick);
-
         $form->handleRequest($request);
 
         if($form->isSubmitted()&& $form->isValid()){
             $trick=$form->getData();
             $em-> persist($trick);
             $em->flush();
+            $this->addFlash('success', 'Vous avez bien ajouté le trick');
         }
         return $this->render('addTrick.html.twig', [
             'form'=> $form->createView()
         ]);
     }
-
 
 
     #[Route(path: '/trick/details/{id}', name: 'trick', methods: ['GET|POST'], schemes: ['https'])]
@@ -73,10 +72,8 @@ class trickController extends AbstractController
         $trickRepo= $this->getDoctrine()->getRepository(Trick::class);
         $trick=$trickRepo->find($id);
 
-
         $repo= $this->getDoctrine()->getRepository(Message::class);
         $messages=$repo->findAll();
-
 
         $message=New Message();
         $user=New User;
@@ -88,15 +85,11 @@ class trickController extends AbstractController
             $message->setauthor($user);
             $user->setMedias();
             $message->setCreationDate(New \DateTime);
-
             $em-> persist($message);
             $em->flush();
 
             //return $this-> redirectToRoute('messages');
-
-
         }
-
         return $this->render('oneTrick.html.twig',[
             'trick'=> $trick,
             'messages'=> $messages,
@@ -120,17 +113,15 @@ class trickController extends AbstractController
             if($form->isSubmitted() && $form->isValid()) {
 
                 $em->remove($trick);
-                //dd($trick);
                 $em->flush();
                 return $this-> redirectToRoute('index');
+                $this->addFlash('success', 'Vous avez bien supprimé le trick');
             }
 
         return $this->render('doDelete.html.twig',[
             'trick'=> $trick,
             'form' => $form->createView(),
         ]);
-
     }
-
 }
 

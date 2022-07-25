@@ -20,9 +20,6 @@ class messageController extends AbstractController
 
         return $this->render('oneTrick.html.twig',[
            'form'=> $myForm->createView(),]);
-
     }
-
-
 }
 

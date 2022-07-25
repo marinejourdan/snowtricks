@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
-#[UniqueEntity('name')]
+#[UniqueEntity('name','slug')]
 class Trick
 {
     #[ORM\Id]
@@ -35,6 +35,8 @@ class Trick
     #[ORM\ManyToOne(targetEntity: "Group", fetch: "EAGER", inversedBy: "tricks")]
     private $group;
 
+    #[ORM\Column(type: 'string', length: 100)]
+    private $slug;
 
     public function getId(): ?int
     {
@@ -98,5 +100,18 @@ class Trick
 
         return $this;
     }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
 
 }
