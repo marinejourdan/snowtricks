@@ -16,14 +16,16 @@ class Media
     #[ORM\Column(type: 'text')]
     private ?string $type;
 
-    #[ORM\ManyToOne(targetEntity: "Trick", fetch: "EAGER", inversedBy: "medias")]
+    #[ORM\ManyToOne(targetEntity: 'Trick', fetch: 'EAGER', inversedBy: 'medias')]
     private ?Trick $trick;
 
-    #[ORM\ManyToOne(targetEntity: "User", fetch: "EAGER", inversedBy: "medias")]
+    #[ORM\OneToOne(targetEntity: 'User', fetch: 'EAGER', mappedBy: 'avatar')]
     private ?User $user;
 
     #[ORM\Column(type: 'text')]
-    private ?string $url;
+    private ?string $fileName;
+
+    private $uploadedFile;
 
     public function getId(): ?int
     {
@@ -66,14 +68,26 @@ class Media
         return $this;
     }
 
-    public function getUrl(): ?string
+    public function getFileName(): ?string
     {
-        return $this->url;
+        return $this->fileName;
     }
 
-    public function setUrl(string $url): self
+    public function setFileName(string $fileName): self
     {
-        $this->url = $url;
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    public function getUploadedFile()
+    {
+        return $this->uploadedFile;
+    }
+
+    public function setUploadedFile($UploadedFile): self
+    {
+        $this->uploadedFile = $UploadedFile;
 
         return $this;
     }

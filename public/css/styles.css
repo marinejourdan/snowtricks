@@ -1,3 +1,21 @@
+/*theme*/
+:root{
+    --primary#40407a:;
+    --primary-light:#ababd3;
+    --accent:#ffb142;
+    --warning:#b33939;
+    --success:#33d9b2;
+    --font-family:roboto, sans-serif;
+    --box-shadow:0 1px 2px 0 rgb(60 64 67 / 30%) , 0 1px 3px 1px rgb(60 64 67 /15%);
+    --border-radius:3px;
+    --color:#2c2c54;
+    --color-dark:#40407a;
+    --gray:#84817a;
+    --gray-dark:#d1ccc0;
+    --border-color:#cd6133;
+
+}
+
 /*header*/
 .header-logo{
     max-width: 150px;
@@ -27,7 +45,6 @@ footer{
 .jumbotron{
     margin-bottom: 0px;
     height: 100vh;
-    color: yellow; /* Le texte sera affiché en blanc */
     text-shadow: black 0.3em 0.3em 0.3em;
     background:transparent;
 }
@@ -107,20 +124,3 @@ h1,h2,h3,h4{
 
 }
 
-/*theme*/
-:root{
-    --primary#40407a:;
-    --primary-light:#ababd3;
-    --accent:#ffb142;
-    --warning:#b33939;
-    --success:#33d9b2;
-    --font-family:roboto, sans-serif;
-    --box-shadow:0 1px 2px 0 rgb(60 64 67 / 30%) , 0 1px 3px 1px rgb(60 64 67 /15%);
-    --border-radius:3px;
-    --color:#2c2c54;
-    --color-dark:#40407a;
-    --gray:#84817a;
-    --gray-dark:#d1ccc0;
-    --border-color:#cd6133;
-
-}

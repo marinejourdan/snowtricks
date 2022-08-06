@@ -5,10 +5,9 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -25,12 +24,12 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
     private $name;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    #[Assert\Email(message:'user.email.invalid')]
-    #[Assert\NotBlank(message:'user.email.not_blank')]
+    #[Assert\Email(message: 'user.email.invalid')]
+    #[Assert\NotBlank(message: 'user.email.not_blank')]
     private $email;
 
-    #[Assert\NotBlank(message:'user.password.not_blank')]
-    #[Assert\Length(min:6, minMessage:'password.not_good')]
+    #[Assert\NotBlank(message: 'user.password.not_blank')]
+    #[Assert\Length(min: 6, minMessage: 'password.not_good')]
     #[ORM\Column(type: 'string', length: 100)]
     private $password;
 
@@ -40,12 +39,11 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
     #[ORM\Column(type: 'text')]
     private $token;
 
-    #[ORM\OneToMany(targetEntity: "Message", cascade: ["remove"], fetch: "EAGER", mappedBy: "author")]
+    #[ORM\OneToMany(targetEntity: 'Message', cascade: ['remove'], fetch: 'EAGER', mappedBy: 'author')]
     private $messages;
 
-    #[Assert\Url(message:'user.media.not_valid')]
-    #[ORM\OneToMany(targetEntity: "Media", cascade: ["persist", "remove"], fetch: "EAGER", mappedBy: "user")]
-    private $medias;
+    #[ORM\OneToOne(targetEntity: 'Media', cascade: ['persist', 'remove'], fetch: 'EAGER', inversedBy: 'user')]
+    private $avatar;
 
     public function __toString()
     {
@@ -61,6 +59,7 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
     {
         return $this->name;
     }
+
     public function getUsername()
     {
         return $this->getName();
@@ -96,6 +95,7 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
 
         return $this;
     }
+
     public function getMessages(): ?Collection
     {
         return $this->messages;
@@ -108,17 +108,18 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
         return $this;
     }
 
-    public function getMedias(): ?Collection
+    public function getAvatar(): ?Media
     {
-        return $this->medias;
+        return $this->avatar;
     }
 
-    public function setMedias(Collection $medias): self
+    public function setAvatar(Media $avatar): self
     {
-        $this->medias = $medias;
+        $this->avatar = $avatar;
 
         return $this;
     }
+
     public function getActive(): ?bool
     {
         return $this->active;
@@ -151,25 +152,22 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
     /** @see \Serializable::serialize() */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->id,
             $this->name,
             $this->email,
             $this->password,
-
-        ));
+        ]);
     }
 
     /** @see \Serializable::unserialize() */
     public function unserialize($serialized)
     {
-        list (
+        list(
             $this->id,
             $this->name,
             $this->email,
-            $this->password,
-
-            ) = unserialize($serialized, array('allowed_classes' => false));
+            $this->password) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
     public function getSalt()
@@ -178,9 +176,10 @@ class User implements UserInterface, \Serializable, PasswordAuthenticatedUserInt
         // see section on salt below
         return null;
     }
+
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return ['ROLE_USER'];
     }
 
     public function eraseCredentials()

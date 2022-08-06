@@ -2,17 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Message;
-use App\Entity\Trick;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,8 +19,10 @@ class UserType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('email', EmailType::class)
-            ->add('password', RepeatedType::class,['type'=>PasswordType::class])
+            ->add('password', RepeatedType::class, ['type' => PasswordType::class])
+            ->add('avatar', MediaType::class)
             ->add('submit', SubmitType::class)
+
         ;
     }
 

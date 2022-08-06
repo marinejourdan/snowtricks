@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\GroupRepository;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Trick;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
@@ -18,7 +17,7 @@ class Group
     #[ORM\Column(type: 'string', length: 100)]
     private $name;
 
-    #[ORM\OneToMany(targetEntity: "Trick", fetch: "EAGER", mappedBy: "group")]
+    #[ORM\OneToMany(targetEntity: 'Trick', fetch: 'EAGER', mappedBy: 'group')]
     private $tricks;
 
     public function getId(): ?int

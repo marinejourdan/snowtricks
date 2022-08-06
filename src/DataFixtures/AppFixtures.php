@@ -20,9 +20,14 @@ class AppFixtures extends Fixture
         $user_1->setPassword('jeanjean');
         $user_1->setToken('prout');
 
+        $media_avatar = new Media();
+        $media_avatar->setType('image');
+        $media_avatar->setFileName('logo.jpeg');
+
+        $user_1->setAvatar($media_avatar);
+
         $manager->persist($user_1);
         $manager->flush();
-
 
         $group_1 = new Group();
         $group_1->setName('grab');
@@ -40,16 +45,19 @@ class AppFixtures extends Fixture
         $trick_1->setName('indy');
         $trick_1->setDescription('saisie de la carre frontside de la planche, entre les deux pieds, avec la main arrière ');
         $trick_1->setGroup($group_1);
+        // $trick_1->setMedia('logo-62dec010add64.jpg');
 
         $trick_2 = new Trick();
         $trick_2->setName('mute');
         $trick_2->setDescription('saisie de la carre frontside de la planche entre les deux pieds avec la main avant ');
         $trick_2->setGroup($group_1);
+        // $trick_2->setMedia('logo-62dec010add64.jpg');
 
         $trick_3 = new Trick();
         $trick_3->setName('truck driver');
         $trick_3->setDescription('saisie du carre avant et carre arrière avec chaque main (comme tenir un volant de voiture)');
         $trick_3->setGroup($group_1);
+        // $trick_3->setMedias('logo-62dec010add64.jpg');
 
         $manager->persist($trick_1);
         $manager->flush();
@@ -67,15 +75,6 @@ class AppFixtures extends Fixture
         $message->setTrick($trick_1);
 
         $manager->persist($message);
-        $manager->flush();
-
-        $media_avatar = new Media();
-        $media_avatar->setType('image');
-        $media_avatar->setUser($user_1);
-        $media_avatar->setUrl('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTHKPnWNxogFKxX-xMGhvzg1HK4ZAP2apR2CSvMO8VMdXwcvO8J2P9Wlxyy9dHX-AGsgE&usqp=CAU');
-
-
-        $manager->persist($media_avatar);
         $manager->flush();
     }
 }

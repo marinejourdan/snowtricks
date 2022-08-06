@@ -44,7 +44,7 @@
             <div> MESSAGES
                 <ul>
                     {% for message in messages %}
-
+                        <img src="/assets/{{ message.author.avatar.fileName }}" >
                         <h3>{{ message.author }}</h3>
                         <p>{{ message.content }}</p>
                         <p>{{ message.creationDate|date("m/d/Y") }}</p>

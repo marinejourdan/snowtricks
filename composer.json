@@ -12,6 +12,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.12",
+        "friendsofphp/php-cs-fixer": "^3.9",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.6",
         "symfony/asset": "5.4.*",
@@ -57,8 +58,11 @@
         "symfony/maker-bundle": "^1.43",
         "symfony/phpunit-bridge": "^6.1",
         "symfony/stopwatch": "5.4.*",
-        "symfony/web-profiler-bundle": "5.4.*"
+        "symfony/web-profiler-bundle": "5.4.*",
+
     },
+
+
     "config": {
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
