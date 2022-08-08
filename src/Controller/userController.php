@@ -145,7 +145,6 @@ class userController extends AbstractController
             if (!$user) {
                 $request->getSession()->getFlashBag()->add('warning', "Cet email n'existe pas.");
 
-
                 return $this->redirectToRoute('reset-password');
             }
             $user->setToken(md5(uniqid()));

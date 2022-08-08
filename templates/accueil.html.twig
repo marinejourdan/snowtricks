@@ -7,31 +7,8 @@
                     <h1>Snowtricks: le meilleur du snowboard!</h1>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <h1> Les tricks  </h1>
-                </div>
-            {% for trick in tricks %}
-                    <div class="col-sm-4">
-                        <div class="card" style="width: 35rem;">
-                             <div class="card-body">
-                                    <h4 class="card-title">{{trick.name}}</h4>
-                                    <h6 class="card-text">{{trick.description}}</h6>
-                                    <p class="card-text"></p>
-                                    <p class="card-text"></p>
-                                    <a href="{{ path('trick', {'slug': trick.slug}) }}" class="btn btn-primary">
-                                        voir le détail du trick
-                                    </a>
-                                    <a class="fa-solid fa-trash-can" href={{ path('delete', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
-                                    <a class="fa-solid  fa-pencil" href={{ path('update', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
-                                </div>
-                        </div>
-                    </div>
-            {% endfor %}
-
+                    {% include 'loadMore.html.twig' %}
                 <div id="loadMore">
-
                 </div>
             </div>
             <button type="button" onclick="loadMore()">load more</button>
@@ -41,9 +18,9 @@
         {% block javascript %}
 
         <script>
-            let page=1;
+            let page = 1;
             function loadMore(){
-                fetch('https://localhost:8000/trickUp?page='+page).then(function(data){
+                fetch('https://localhost:8000/moretricks?page='+page).then(function(data){
                     return data.text();
 
                 }).then(function (html){

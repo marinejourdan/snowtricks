@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Message;
 use App\Entity\Trick;
-use App\Entity\User;
 use App\Form\AddTrickType;
 use App\Form\MessageFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class trickController extends AbstractController
@@ -21,7 +19,7 @@ class trickController extends AbstractController
     public function getList()
     {
         $repo = $this->getDoctrine()->getRepository(Trick::class);
-        $tricks = $repo->findAll();
+        $tricks = $repo->findBy([], [], 5);
 
         return $this->render('accueil.html.twig', ['tricks' => $tricks]);
     }
@@ -65,7 +63,6 @@ class trickController extends AbstractController
         $slug = $request->get('slug');
         $trickRepo = $this->getDoctrine()->getRepository(Trick::class);
         $trick = $trickRepo->findOneBySlug($slug);
-
         $repo = $this->getDoctrine()->getRepository(Message::class);
         $messages = $repo->findAll();
 
@@ -74,7 +71,7 @@ class trickController extends AbstractController
         $myForm = $this->createForm(MessageFormType::class, $message);
         $myForm->handleRequest($request);
         if ($myForm->isSubmitted() && $myForm->isValid()) {
-            $message=$myForm->getData();
+            $message = $myForm->getData();
             $message->setAuthor($this->getUser());
             $message->setCreationDate(new \DateTime());
             $em->persist($message);
@@ -116,9 +113,20 @@ class trickController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/trickUp', name: 'TrickUp', methods: ['GET|POST'], schemes: ['https'])]
-    public function accueilTest(Request $request)
+    #[Route(path: '/moretricks', name: 'moreTricks', methods: ['GET|POST'], schemes: ['https'])]
+    public function moreTricks(Request $request)
     {
-        return new Response('<h2>voilà '.$request->query->get('page').'</h2>');
+        $trickRepo = $this->getDoctrine()->getRepository(Trick::class);
+        $page = $request->get('page');
+
+        $limit = 4;
+        $offset = 4 * $page - 1;
+
+        $tricks = $trickRepo->findBy([], [], $limit, $offset);
+
+        return $this->render('loadMore.html.twig', [
+            'tricks' => $tricks,
+            'page' => $page,
+        ]);
     }
 }
