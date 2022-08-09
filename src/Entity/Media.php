@@ -16,7 +16,7 @@ class Media
     #[ORM\Column(type: 'text')]
     private ?string $type;
 
-    #[ORM\ManyToOne(targetEntity: 'Trick', fetch: 'EAGER', inversedBy: 'medias')]
+    #[ORM\ManyToOne(targetEntity: 'Trick', fetch: 'EAGER', inversedBy: 'gallery')]
     private ?Trick $trick;
 
     #[ORM\OneToOne(targetEntity: 'User', fetch: 'EAGER', mappedBy: 'avatar')]

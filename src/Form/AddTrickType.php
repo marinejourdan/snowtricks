@@ -16,7 +16,7 @@ class AddTrickType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('medias', FileType::class, ['multiple' => true])
+            ->add('medias', MediaType::class)
             ->add('submit', SubmitType::class)
         ;
     }

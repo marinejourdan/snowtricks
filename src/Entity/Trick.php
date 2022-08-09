@@ -29,7 +29,7 @@ class Trick
     private $messages;
 
     #[ORM\OneToMany(targetEntity: 'Media', cascade: ['persist', 'remove'], fetch: 'LAZY', mappedBy: 'trick')]
-    private $medias;
+    private $gallery;
 
     #[ORM\ManyToOne(targetEntity: 'Group', fetch: 'EAGER', inversedBy: 'tricks')]
     private $group;
@@ -78,14 +78,14 @@ class Trick
         return $this;
     }
 
-    public function getMedias(): ?Collection
+    public function getGallery(): ?Collection
     {
-        return $this->medias;
+        return $this->gallery;
     }
 
-    public function setMedias(?Collection $medias): self
+    public function setGallery(?Collection $gallery): self
     {
-        $this->medias = $medias;
+        $this->gallery = $gallery;
 
         return $this;
     }

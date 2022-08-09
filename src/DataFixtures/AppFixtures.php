@@ -8,6 +8,7 @@ use App\Entity\Message;
 use App\Entity\Trick;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
@@ -47,11 +48,26 @@ class AppFixtures extends Fixture
         $manager->persist($group_3);
         $manager->flush();
 
+        $media1 = new Media();
+        $media1->setType('image');
+        $media1->setFileName('symbole_feministe-62ee79856b70a.jpg');
+
+        $media2 = new Media();
+        $media2->setType('image');
+        $media2->setFileName('logo.jpeg');
+
+        $media3 = new Media();
+        $media3->setType('image');
+        $media3->setFileName('symbole_feministe-62ee79856b70a.jpg');
+
         $trick_1 = new Trick();
         $trick_1->setName('indy');
         $trick_1->setDescription('saisie de la carre frontside de la planche, entre les deux pieds, avec la main arrière ');
         $trick_1->setGroup($group_1);
-        // $trick_1->setMedia('logo-62dec010add64.jpg');
+        $media1->setTrick($trick_1);
+        $media2->setTrick($trick_1);
+        $media3->setTrick($trick_1);
+        $trick_1->setGallery(new ArrayCollection([$media1, $media2, $media3]));
 
         $trick_2 = new Trick();
         $trick_2->setName('mute');
@@ -75,7 +91,7 @@ class AppFixtures extends Fixture
         $trick_5->setName('Backside Air');
         $trick_5->setDescription('saisie du carre avant et carre arrière avec chaque main (comme tenir un volant de voiture)');
         $trick_5->setGroup($group_2);
-        // $trick_5->setMedias('logo-62dec010add64.jpg');
+        //$trick_5->setGallery();
 
         $trick_6 = new Trick();
         $trick_6->setName('front flip');
@@ -120,5 +136,10 @@ class AppFixtures extends Fixture
 
         $manager->persist($message);
         $manager->flush();
+
+
+
+
+
     }
 }

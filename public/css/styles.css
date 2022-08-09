@@ -33,9 +33,10 @@ footer{
 /*accueil*/
 
 .fond {
-    background: url(/assets/home_image.jpg);
-    position: fixed; /* Le fond est fixé en haut de la page */
-    width: 100%; /* Il occupe toute la largeur de l'écran */
+    background: url(/assets/fond.jpg);
+    position: fixed;
+    text-align: right;
+    width: 50%; /* Il occupe toute la largeur de l'écran */
     height: 700px; /* On met ici la même hauteur que le jumbotron */
     top: 0;
     left: 0;
@@ -44,8 +45,8 @@ footer{
 
 .jumbotron{
     margin-bottom: 0px;
+    font-style: oblique;
     height: 100vh;
-    text-shadow: black 0.3em 0.3em 0.3em;
     background:transparent;
 }
 
