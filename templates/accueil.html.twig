@@ -2,19 +2,16 @@
         {% block body %}
             <div class="jumbotron ">
                 <div class="container">
-
                     <div class="fond" >
                     </div>
-                    <h1>Snowtricks: <br> le meilleur du snowboard!</h1>
+                    <h1>Snowtricks <br> le meilleur du snowboard!</h1>
+                    <a class="fa-solid fa-arrow-down-long" href="#loadMore">
                 </div>
-
             </div>
-                    {% include 'loadMore.html.twig' %}
-                <div id="loadMore">
-                </div>
+            <div id="loadMore">
+                {% include 'loadMore.html.twig' %}
             </div>
             <button type="button" onclick="loadMore()">load more</button>
-
         {% endblock %}
 
         {% block javascript %}

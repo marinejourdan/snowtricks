@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Trick;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,7 +17,16 @@ class AddTrickType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('medias', MediaType::class)
+            ->add('gallery', CollectionType::class, array(
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype' => true,
+                'entry_type' => MediaType::class,
+                'attr' => [
+                    'class' => "add_trick_gallery"
+                ]
+            ))
+
             ->add('submit', SubmitType::class)
         ;
     }

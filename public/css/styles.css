@@ -13,16 +13,17 @@
     --gray:#84817a;
     --gray-dark:#d1ccc0;
     --border-color:#cd6133;
-
 }
 
 /*header*/
 .header-logo{
     max-width: 150px;
+    margin-left: 40px;
 }
 
 .navbar-expand-lg .navbar-collapse {
     justify-content: end;
+    margin-right: 40px;
 }
 
 /*footer*/
@@ -46,29 +47,23 @@ footer{
 .jumbotron{
     margin-bottom: 0px;
     font-style: oblique;
+    text-align: end;
     height: 100vh;
     background:transparent;
-}
 
 #contenu {
     top:500;
     left:500;
     width:100px;
 }
+
+.btn-primary {
+    background-color: #8064A2 !important;
 }
 
-/*debug*/
 
-.b1 {
-    background-color: red;
-}
+/*onetrick*/
 
-.b2 {
-    background-color: blue;
-}
-
-.b3 {
-    background-color: green;
 
 /*reset*/
 

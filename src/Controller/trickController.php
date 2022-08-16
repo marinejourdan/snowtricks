@@ -39,11 +39,18 @@ class trickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $medias = $form->get('medias')->getData();
+            
+            dd($form->getData());
 
-            foreach ($medias as $media) {
+            $galleries = $form->get('gallery')->getData();
+
+            foreach ($galleries as $gallery) {
+                $uploadedFile = $trick->getGallery()->getUploadedFile();
                 $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $newFilename = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
+                $fileName = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
+                $trick->getGallery()->setFileName($fileName);
+                $trick->getGallery()->setType('image');
             }
 
             $trick = $form->getData();
@@ -63,23 +70,29 @@ class trickController extends AbstractController
         $slug = $request->get('slug');
         $trickRepo = $this->getDoctrine()->getRepository(Trick::class);
         $trick = $trickRepo->findOneBySlug($slug);
-        $repo = $this->getDoctrine()->getRepository(Message::class);
-        $messages = $repo->findAll();
 
+        $repo = $this->getDoctrine()->getRepository(Message::class);
         $message = new Message();
         $message->setTrick($trick);
+        $messages = $repo->findBy(
+            ['trick' => $trick],
+            ['creationDate' => 'desc']
+        );
+
         $myForm = $this->createForm(MessageFormType::class, $message);
         $myForm->handleRequest($request);
+
         if ($myForm->isSubmitted() && $myForm->isValid()) {
+
             $message = $myForm->getData();
+            if ($message->setAuthor($this->getUser())==null){
+                return $this-> redirectToRoute('connexion');
+            }
             $message->setAuthor($this->getUser());
             $message->setCreationDate(new \DateTime());
             $em->persist($message);
             $em->flush();
-
-            // return $this-> redirectToRoute('messages');
         }
-
         return $this->render('oneTrick.html.twig', [
             'trick' => $trick,
             'messages' => $messages,
@@ -119,7 +132,7 @@ class trickController extends AbstractController
         $trickRepo = $this->getDoctrine()->getRepository(Trick::class);
         $page = $request->get('page');
 
-        $limit = 4;
+        $limit = 5;
         $offset = 4 * $page - 1;
 
         $tricks = $trickRepo->findBy([], [], $limit, $offset);
