@@ -1,55 +1,45 @@
 {% extends "./base.html.twig" %}
-        {% block body %}
 
-            <h1> Ajouter un trick</h1>
+{% block body %}
+    <h1> Ajouter un trick</h1>
 
-            {{ form_start(form) }}
-            {{ form_row(form.name) }}
-            {{ form_row(form.description) }}
-            {{ form_row(form.gallery) }}
+    {{ form_start(form) }}
 
-            <button type="button" class="add_item_link" data-collection-holder-class="add_trick_gallery">Ajouter un media</button>
+        {{ form_row(form.name) }}
 
-            {#
-            <h3>Gallery</h3>
-            <ul class="gallery">
-                {% for mediaform in form.gallery %}
-                    <li>{{ form_row(mediaform) }}
-                   <img width="200" height="200" src="/assets/{{ mediaform.vars.value.fileName }}"  alt="">
-                    </li>
-                {% endfor %}
-            </ul>
-            #}
+        {{ form_row(form.description) }}
 
-            {{ form_end(form) }}
+        {{ form_row(form.group) }}
 
+        {{ form_row(form.gallery) }}
 
+        <button type="button" class="add_item_link" data-collection-holder-class="add_trick_gallery">Ajouter un media</button>
 
-<script type="text/javascript">
-    const addFormToCollection = (e) => {
-        const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+    {{ form_end(form) }}
 
-        const item = document.createElement('li');
+    <script type="text/javascript">
+        const addFormToCollection = (e) => {
+            const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
 
-        item.innerHTML = collectionHolder
-            .dataset
-            .prototype
-            .replace(
-                /__name__/g,
-                collectionHolder.dataset.index
-            );
+            const item = document.createElement('li');
 
-        collectionHolder.appendChild(item);
+            item.innerHTML = collectionHolder
+                .dataset
+                .prototype
+                .replace(
+                    /__name__/g,
+                    collectionHolder.dataset.index
+                );
 
-        collectionHolder.dataset.index++;
-    };
+            collectionHolder.appendChild(item);
 
-    document
-        .querySelectorAll('.add_item_link')
-        .forEach(btn => {
-            btn.addEventListener("click", addFormToCollection)
-        });
-</script>
-
+            collectionHolder.dataset.index++;
+        };
+        document
+            .querySelectorAll('.add_item_link')
+            .forEach(btn => {
+                btn.addEventListener("click", addFormToCollection)
+            });
+    </script>
 
 {% endblock %}

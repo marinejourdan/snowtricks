@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Message;
@@ -10,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -39,21 +39,27 @@ class trickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            dd($form->getData());
-
-            $galleries = $form->get('gallery')->getData();
-
-            foreach ($galleries as $gallery) {
-                $uploadedFile = $trick->getGallery()->getUploadedFile();
-                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $newFilename = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
-                $fileName = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
-                $trick->getGallery()->setFileName($fileName);
-                $trick->getGallery()->setType('image');
-            }
 
             $trick = $form->getData();
+            $gallery = $trick->getGallery();
+            foreach ($gallery as $media) {
+
+                $uploadedFile=$media->getUploadedFile();
+                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $fileName = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
+                $media->setFileName($fileName);
+                $media->setType('image');
+                $media->setTrick($trick);
+                try {
+                    $uploadedFile->move(
+                        'assets',
+                        $fileName
+                    );
+                } catch (FileException $e) {
+                    exit('Erreur upload image');
+                }
+            }
+
             $em->persist($trick);
             $em->flush();
             $this->addFlash('success', 'Vous avez bien ajouté le trick');
@@ -61,6 +67,7 @@ class trickController extends AbstractController
 
         return $this->render('addTrick.html.twig', [
             'form' => $form->createView(),
+            'trick' => $trick,
         ]);
     }
 
@@ -70,6 +77,9 @@ class trickController extends AbstractController
         $slug = $request->get('slug');
         $trickRepo = $this->getDoctrine()->getRepository(Trick::class);
         $trick = $trickRepo->findOneBySlug($slug);
+        $galleryCollection=$trick->getGallery();
+        $galleryArray=$galleryCollection->toArray();
+        $media1=array_shift($galleryArray);
 
         $repo = $this->getDoctrine()->getRepository(Message::class);
         $message = new Message();
@@ -85,7 +95,7 @@ class trickController extends AbstractController
         if ($myForm->isSubmitted() && $myForm->isValid()) {
 
             $message = $myForm->getData();
-            if ($message->setAuthor($this->getUser())==null){
+            if ($this->getUser()==null){
                 return $this-> redirectToRoute('connexion');
             }
             $message->setAuthor($this->getUser());
@@ -97,10 +107,11 @@ class trickController extends AbstractController
             'trick' => $trick,
             'messages' => $messages,
             'myform' => $myForm->createView(),
+            'media1'=>$media1
         ]);
     }
 
-    #[Route(path: '/trick/delete/{id}', name: 'delete', methods: ['GET|POST'], schemes: ['https'])]
+    #[Route(path: '/trick/deleteMedia', name: 'delete', methods: ['GET|POST'], schemes: ['https'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function delete(Request $request, EntityManagerInterface $em)
     {
