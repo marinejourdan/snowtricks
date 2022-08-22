@@ -21,6 +21,7 @@ class trickController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Trick::class);
         $tricks = $repo->findBy([], [], 5);
 
+
         return $this->render('accueil.html.twig', ['tricks' => $tricks]);
     }
 
@@ -42,24 +43,31 @@ class trickController extends AbstractController
 
             $trick = $form->getData();
             $gallery = $trick->getGallery();
+
             foreach ($gallery as $media) {
 
-                $uploadedFile=$media->getUploadedFile();
-                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $fileName = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
-                $media->setFileName($fileName);
-                $media->setType('image');
-                $media->setTrick($trick);
-                try {
-                    $uploadedFile->move(
-                        'assets',
-                        $fileName
-                    );
-                } catch (FileException $e) {
-                    exit('Erreur upload image');
+                if ($media->getType()=='image'){
+
+                    $uploadedFile=$media->getUploadedFile();
+                    if ($uploadedFile){
+                        $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                        $fileName = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
+                        $media->setFileName($fileName);
+                        $media->setType('image');
+                        $media->setTrick($trick);
+
+                        try {
+                            $uploadedFile->move(
+                                'assets',
+                                $fileName
+                            );
+                        } catch (FileException $e) {
+                            exit('Erreur upload image');
+                        }
+                    }
+
                 }
             }
-
             $em->persist($trick);
             $em->flush();
             $this->addFlash('success', 'Vous avez bien ajouté le trick');
@@ -69,6 +77,7 @@ class trickController extends AbstractController
             'form' => $form->createView(),
             'trick' => $trick,
         ]);
+
     }
 
     #[Route(path: '/trick/details/{slug}', name: 'trick', methods: ['GET|POST'], schemes: ['https'])]

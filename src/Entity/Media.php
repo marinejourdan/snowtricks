@@ -22,8 +22,11 @@ class Media
     #[ORM\OneToOne(targetEntity: 'User', fetch: 'EAGER', mappedBy: 'avatar')]
     private ?User $user;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $fileName;
+
+    #[ORM\Column(type: 'text',nullable: true)]
+    private ?string $videoUrl;
 
     private $uploadedFile;
 
@@ -91,4 +94,17 @@ class Media
 
         return $this;
     }
+
+    public function getVideoUrl():?string
+    {
+        return $this->videoUrl;
+    }
+
+    public function setVideoUrl($videoUrl): self
+    {
+        $this->videoUrl = $videoUrl;
+
+        return $this;
+    }
+
 }

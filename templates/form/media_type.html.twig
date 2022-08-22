@@ -3,10 +3,13 @@
     {% set media=form.vars.value %}
     {% if media %}
         <a class="fa-solid fa-trash-can" href={{ path('deleteMedia', {'id' : media.id}) }}> <span class="sr-only">(current)</span></a>
-        <img  src="/assets/{{ media.fileName }}" class="img-fluid card">
-    {% else %}
-    {{ form_widget(form) }}
-    {{ form_help(form) }}
-
+        {% if (media.type) =='image' %}
+            <img  src="/assets/{{ media.fileName }}" class="img-fluid card">
+         {% else %}
+             <iframe width="560" height="315" src="{{ media.videoUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% endif %}
     {% endif %}
+
+        {{ form_widget(form) }}
+
 {% endblock %}

@@ -1,7 +1,11 @@
 <div class="card-deck">
     {% for trick in tricks %}
-        <div class="card bg-light mb-3" style="max-width: 25rem;">
-            <img class="card-img-top" src="{{ asset('assets/logo.jpeg')}}" alt="Card image cap">
+        <div class="card bg-light mb-3">
+            {% if trick.getFirstMedia is empty %}
+                <img class="img-fluid" src="{{asset('assets/home_image.jpg')}}" alt="Card image cap">
+            {% else %}
+                <img class="img-fluid" src="assets/{{ trick.getFirstMedia.fileName }}" alt="Card image cap">
+            {% endif %}
             <a href="{{ path('trick', {'slug': trick.slug}) }}" class="btn btn-primary">
                 {{trick.name}}
             </a>
