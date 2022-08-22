@@ -1,12 +1,13 @@
 <div class="card-deck">
-    {% for trick in tricks %}
-        <div class="card bg-light mb-3">
+        {% for trick in tricks %}
+    <div class="card mb-4">
+        <div class="card-body">
             {% if trick.getFirstMedia is empty %}
                 <img class="img-fluid" src="{{asset('assets/home_image.jpg')}}" alt="Card image cap">
             {% else %}
                 <img class="img-fluid" src="assets/{{ trick.getFirstMedia.fileName }}" alt="Card image cap">
             {% endif %}
-            <a href="{{ path('trick', {'slug': trick.slug}) }}" class="btn btn-primary">
+            <a href="{{ path('trick', {'slug': trick.slug}) }}" class="btn btn-warning">
                 {{trick.name}}
             </a>
             {% if is_granted ('IS_AUTHENTICATED_FULLY')%}
@@ -14,5 +15,6 @@
             <a class="fa-solid  fa-pencil" href={{ path('update', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
             {% endif %}
         </div>
-    {% endfor %}
+    </div>
+        {% endfor %}
 </div>

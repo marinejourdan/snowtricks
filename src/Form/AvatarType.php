@@ -10,18 +10,11 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MediaType extends AbstractType
+class AvatarType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('type', ChoiceType::class, [
-                'choices'  => [
-                    'video' => 'video',
-                    'image' => 'image',
-                ],
-            ])
-            ->add('videoUrl', UrlType::class,['required' => false])
             ->add('uploadedFile', FileType::class, ['required' => false]);
     }
 

@@ -20,9 +20,8 @@ class UserType extends AbstractType
             ->add('name', TextType::class)
             ->add('email', EmailType::class)
             ->add('password', RepeatedType::class, ['type' => PasswordType::class])
-            ->add('avatar', MediaType::class)
+            ->add('avatar', AvatarType::class)
             ->add('submit', SubmitType::class)
-
         ;
     }
 
