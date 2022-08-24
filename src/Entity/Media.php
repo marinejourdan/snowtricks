@@ -25,7 +25,7 @@ class Media
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $fileName;
 
-    #[ORM\Column(type: 'text',nullable: true)]
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $videoUrl;
 
     private $uploadedFile;
@@ -95,7 +95,7 @@ class Media
         return $this;
     }
 
-    public function getVideoUrl():?string
+    public function getVideoUrl(): ?string
     {
         return $this->videoUrl;
     }
@@ -106,5 +106,4 @@ class Media
 
         return $this;
     }
-
 }

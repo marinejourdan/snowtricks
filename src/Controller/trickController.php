@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Message;
@@ -21,7 +22,6 @@ class trickController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Trick::class);
         $tricks = $repo->findBy([], [], 5);
 
-
         return $this->render('accueil.html.twig', ['tricks' => $tricks]);
     }
 
@@ -40,16 +40,13 @@ class trickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $trick = $form->getData();
             $gallery = $trick->getGallery();
 
             foreach ($gallery as $media) {
-
-                if ($media->getType()=='image'){
-
-                    $uploadedFile=$media->getUploadedFile();
-                    if ($uploadedFile){
+                if ('image' == $media->getType()) {
+                    $uploadedFile = $media->getUploadedFile();
+                    if ($uploadedFile) {
                         $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
                         $fileName = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
                         $media->setFileName($fileName);
@@ -65,7 +62,6 @@ class trickController extends AbstractController
                             exit('Erreur upload image');
                         }
                     }
-
                 }
             }
             $em->persist($trick);
@@ -77,7 +73,6 @@ class trickController extends AbstractController
             'form' => $form->createView(),
             'trick' => $trick,
         ]);
-
     }
 
     #[Route(path: '/trick/details/{slug}', name: 'trick', methods: ['GET|POST'], schemes: ['https'])]
@@ -86,9 +81,9 @@ class trickController extends AbstractController
         $slug = $request->get('slug');
         $trickRepo = $this->getDoctrine()->getRepository(Trick::class);
         $trick = $trickRepo->findOneBySlug($slug);
-        $galleryCollection=$trick->getGallery();
-        $galleryArray=$galleryCollection->toArray();
-        $media1=array_shift($galleryArray);
+        $galleryCollection = $trick->getGallery();
+        $galleryArray = $galleryCollection->toArray();
+        $media1 = array_shift($galleryArray);
 
         $repo = $this->getDoctrine()->getRepository(Message::class);
         $message = new Message();
@@ -102,21 +97,21 @@ class trickController extends AbstractController
         $myForm->handleRequest($request);
 
         if ($myForm->isSubmitted() && $myForm->isValid()) {
-
             $message = $myForm->getData();
-            if ($this->getUser()==null){
-                return $this-> redirectToRoute('connexion');
+            if (null == $this->getUser()) {
+                return $this->redirectToRoute('connexion');
             }
             $message->setAuthor($this->getUser());
             $message->setCreationDate(new \DateTime());
             $em->persist($message);
             $em->flush();
         }
+
         return $this->render('oneTrick.html.twig', [
             'trick' => $trick,
             'messages' => $messages,
             'myform' => $myForm->createView(),
-            'media1'=>$media1
+            'media1' => $media1,
         ]);
     }
 

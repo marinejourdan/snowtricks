@@ -1,6 +1,7 @@
 {% extends "./base.html.twig" %}
         {% block body %}
         <div class="container" id="fond_image_home">
+            <div class="row">
             {% if is_granted ('IS_AUTHENTICATED_FULLY')%}
             <a class="fa-solid fa-trash-can" href={{ path('delete', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
             <a class="fa-solid  fa-pencil" href={{ path('update', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
@@ -11,47 +12,45 @@
             {% else %}
                 <img class="img-fluid" src="/assets/{{ media1.fileName }}" width="2800" height="600">
             {% endif %}
-
-        </div>
         <!-- Section: Images -->
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h1 class="page-title">{{trick.name}}</h1>
-                    <h3 class="gallery-title">{{trick.description}} </h3>
-                    <div class="row">
-                        {% for media in trick.gallery %}
-                        <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox" data-gallery="example-gallery" class="col-lg-3 col-md-4 col-6 my-3">
-                                <img  src="/assets/{{ media.fileName }}" class="img-fluid card">
-                        </a>
-                            <iframe width="560" height="315" src="{{ media.videoUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-                        {% endfor %}
-                    </div>
+            <div class="well text-center">
+                <h3 class="gallery-title">{{trick.name}} </h3>
+                <div class="col-md-12">{{trick.description}}</div>
+                <div class="row">
+                    {% for media in trick.gallery %}
+                        <div class="col-md-4">
+                        <img height="250px" width="250px" src="/assets/{{ media.fileName }}" class="w-100">
+                        <iframe src="{{ media.videoUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                {% endfor %}
                 </div>
+                <h3 class="gallery-group">Groupe de figures: {{trick.group.name}} </h3>
             </div>
         </div>
+
+
 
             {% if is_granted ('IS_AUTHENTICATED_FULLY')%}
-        <body class="bg-gradient-primary">
-            <div class="container">
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <div class="row">
-                            <div class="col-lg-8">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-6">Ajouter un message</h1>
-                                    {{ form(myform) }}
-                                    </div>
+                <body class="bg-gradient-primary">
+                    <div class="container">
+                        <div class="card o-hidden border-0 shadow-lg my-5">
+                            <div class="card-body p-0">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="p-5">
+                                            <div class="text-center">
+                                                <h1 class="h4 text-gray-900 mb-6">Ajouter un message</h1>
+                                            {{ form(myform) }}
+                                            </div>
+                                        </div>
+                                     </div>
                                 </div>
-                             </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </body>
+                </body>
             {% endif %}
+
 
         <body class="bg-gradient-primary">
             <div class="container">
@@ -76,5 +75,4 @@
                 {% endfor %}
             </div>
         </body>
-
     {% endblock %}

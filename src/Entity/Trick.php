@@ -114,7 +114,8 @@ class Trick
         return $this;
     }
 
-    public function getFirstMedia(){
+    public function getFirstMedia()
+    {
         return $this->getGallery()->first();
     }
 }

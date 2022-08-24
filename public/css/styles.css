@@ -1,6 +1,6 @@
 /*theme*/
 :root{
-    --primary#40407a:;
+    --primary:#40407a;
     --primary-light:#ababd3;
     --accent:#ffb142;
     --warning:#b33939;
@@ -15,75 +15,168 @@
     --border-color:#cd6133;
 }
 
-/*header*/
-.header-logo{
-    max-width: 150px;
-    margin-left: 40px;
+body{
+    font-family:var(--font-family);
+    color:var(--color);
+    margin-right:20px;
+    padding-right:20px;
+    margin-left:20px;
+    padding-left:20px;
 }
 
-.navbar-expand-lg .navbar-collapse {
-    justify-content: end;
-    margin-right: 40px;
+/*header*/
+.header-logo{
+    max-width: 180px;
+}
+@media all and (min-width: 780px) {
+
+    .navbar-footer{
+    display: none;
+    }
+    .navbar-expand-lg .navbar-collapse {
+        display: flex;
+        justify-content: center;
+        margin-right: 10px;
+    }
 }
 
 /*footer*/
 footer{
     border-top-style: solid;
+    margin-right: 70px;
+    margin-left: 70px;
+}
+
+footer ul li {
+    display: inline-block;
+    margin: 50px;
+    align-items: center;
+
+}
+
+@media all and (max-width: 780px){
+    .navbar-header{
+    display: none;
+    }
 }
 
 /*accueil*/
 
 .fond {
     background: url(/assets/fond.jpg);
-    position: fixed;
-    text-align: right;
-    width: 50%; /* Il occupe toute la largeur de l'écran */
-    height: 700px; /* On met ici la même hauteur que le jumbotron */
+    position: center;
+    width: 90%; /* Il occupe toute la largeur de l'écran */
+    height: 600px; /* On met ici la même hauteur que le jumbotron */
     top: 0;
     left: 0;
     z-index: -1;
 }
 
-.jumbotron{
+.jumbotron {
     margin-bottom: 0px;
-    font-style: oblique;
-    text-align: end;
     height: 100vh;
-    background:transparent;
+    background: transparent;
+}
+
+.jumbotron h1{
+    font-weight: bold;
+    font-size: 80px;
+}
+.fa-solid{
+    display: flex;
+    justify-content:right;
+}
 
 #contenu {
-    top:500;
-    left:500;
     width:100px;
 }
 
-.btn-primary {
-    background-color: #8064A2 !important;
+@media all and (max-width: 780px){
+    .fond {
+        background: url(/assets/logo2.jpg);
+        position: static;
+        margin-left: 80px;
+        width: 70%; /* Il occupe toute la largeur de l'écran */
+        height: 380px; /* On met ici la même hauteur que le jumbotron */
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    .jumbotron h1{
+        font-size: 60px;
+        text-align: center;
+    }
+}
+
+@media all and (max-width: 780px){
+    .card-deck {
+        display: flex;
+        flex-direction: column;
+    }
+}
+.card-body a{
+    font-weight: bold;
+    background-color: transparent;
+}
+
+.card-body a btn{
+    display: flex;
+    justify-content: center;
+}
+
+.card-body img{
+    width: 300px;
+    height: 200px;
 }
 
 
-/*onetrick*/
+/*detail-trick*/
 
-
-/*reset*/
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    display:flex;
+#fond_image_home img{
+    box-shadow:8px 8px 10px 0 rgba(0,0,0,0.5);
+    margin-bottom: 20px;
 }
 
-body{
-    font-family:var(--font-family);
-    color:var(--color);
-
+.carousel-item {
+    width:200px;
+    height:200px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
 }
 
 ul{
     list-style: none;
 }
+{
+.row img
+    width:300px;
+}
+.gallery-title{
+    border-style: dashed;
+    border-bottom: #0a0a0a;
+}
+.gallery-group {
+    border-style: solid;
+    border-bottom: #0a0a0a;
+}
+@media all and (max-width: 780px){
 
+}
+
+
+
+
+
+
+
+@media all and (max-width: 780px){
+    h1{
+        color:var(--color-dark);
+        font-family: var(--font-family);
+        font-style: italic;
+        font-size: 40px;
+    }
+}
 h1,h2,h3,h4{
     color:var(--color-dark);
     font-family: var(--font-family);
@@ -112,7 +205,6 @@ h1,h2,h3,h4{
 .p-20{
     padding:20px;
 }
-
 
 /*general*/
 

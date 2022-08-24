@@ -16,12 +16,12 @@ class MediaType extends AbstractType
     {
         $builder
             ->add('type', ChoiceType::class, [
-                'choices'  => [
+                'choices' => [
                     'video' => 'video',
                     'image' => 'image',
                 ],
             ])
-            ->add('videoUrl', UrlType::class,['required' => false])
+            ->add('videoUrl', UrlType::class, ['required' => false])
             ->add('uploadedFile', FileType::class, ['required' => false]);
     }
 

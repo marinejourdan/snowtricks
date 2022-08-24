@@ -91,7 +91,7 @@ class AppFixtures extends Fixture
         $trick_5->setName('Backside Air');
         $trick_5->setDescription('saisie du carre avant et carre arrière avec chaque main (comme tenir un volant de voiture)');
         $trick_5->setGroup($group_2);
-        //$trick_5->setGallery();
+        // $trick_5->setGallery();
 
         $trick_6 = new Trick();
         $trick_6->setName('front flip');
@@ -136,10 +136,5 @@ class AppFixtures extends Fixture
 
         $manager->persist($message);
         $manager->flush();
-
-
-
-
-
     }
 }

@@ -1,28 +1,17 @@
 {% extends "./base.html.twig" %}
-
 {% block body %}
     <h1> Ajouter un trick</h1>
-
     {{ form_start(form) }}
-
         {{ form_row(form.name) }}
-
         {{ form_row(form.description) }}
-
         {{ form_row(form.group) }}
-
         {{ form_row(form.gallery) }}
-
         <button type="button" class="add_item_link" data-collection-holder-class="add_trick_gallery">Ajouter un media</button>
-
     {{ form_end(form) }}
-
     <script type="text/javascript">
         const addFormToCollection = (e) => {
             const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
-
             const item = document.createElement('li');
-
             item.innerHTML = collectionHolder
                 .dataset
                 .prototype
@@ -30,9 +19,7 @@
                     /__name__/g,
                     collectionHolder.dataset.index
                 );
-
             collectionHolder.appendChild(item);
-
             collectionHolder.dataset.index++;
         };
         document
@@ -41,5 +28,4 @@
                 btn.addEventListener("click", addFormToCollection)
             });
     </script>
-
 {% endblock %}
