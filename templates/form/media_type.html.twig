@@ -1,17 +1,29 @@
 {# templates/form/media_type.html.twig #}
 {% block media_row %}
+
     {% set media=form.vars.value %}
     {% if media %}
-        <a class="fa-solid fa-trash-can" href={{ path('deleteMedia', {'id' : media.id}) }}> <span class="sr-only">(current)</span></a>
-        {% if (media.type) =='image' %}
-            <img  src="/assets/{{ media.fileName }}" class="img-fluid card">
-        {% else %}
-             <iframe width="560" height="315" src="{{ media.videoUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        {% endif %}
-        <div class="form" style="display: none">
-            {{ form_widget(form) }}
-        </div>
-    {% elseif media is defined%}
-    {{ form_widget(form) }}
+        <li class="hide-input">
+            <div class="form-group">
+                <legend class="col-form-label required">Media {{ media.id }}</legend>
+
+                <a class="fa-solid fa-trash-can" href={{ path('deleteMedia', {'id' : media.id}) }}> <span class="sr-only">(current)</span></a>
+                {% if (media.type) =='image' %}
+                    <img src="/assets/{{ media.fileName }}" class="w-10" />
+                {% else %}
+                    <iframe class="w-100" src="{{ media.videoUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                {% endif %}
+
+                <div style="display: none;">
+                    {{ form_widget(form) }}
+                </div>
+            </div>
+        </li>
+
+    {% else %}
+        {{ form_row(form) }}
     {% endif %}
+
 {% endblock %}
+
+

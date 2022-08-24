@@ -14,29 +14,22 @@
 
     <body class="body">
 
-
         {{ include('partials/_header.html.twig')  }}
+
         <div class="flash-success" >
             {% for message in app.flashes('success') %}
                 {{ message }}
             {% endfor %}
         </div>
+
         <div class="flash-fail" >
             {% for message in app.flashes('fail') %}
                 {{ message }}
             {% endfor %}
         </div>
 
-
-        <div class=" flex-fill d-flex flex-row-nowrap justify-content-center">
-            <div class="content d-flex flex-row-nowrap flex-fill">
-
-                <div class="app-content flex-fill">
-                    <div class="main">
-                    {% block body %}{% endblock %}
-                    </div>
-                </div>
-            </div>
+        <div class="main">
+            {% block body %}{% endblock %}
         </div>
 
         {{ include('partials/_footer.html.twig')  }}

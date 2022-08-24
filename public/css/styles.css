@@ -39,6 +39,10 @@ body{
         margin-right: 10px;
     }
 }
+#flechebas {
+    position: absolute;
+    right: 2em;
+}
 
 /*footer*/
 footer{
@@ -159,10 +163,9 @@ ul{
     border-style: solid;
     border-bottom: #0a0a0a;
 }
-@media all and (max-width: 780px){
-
+.fa-solid{
+    display: inline-block;
 }
-
 
 
 

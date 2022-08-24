@@ -40,6 +40,7 @@ class AddTrickType extends AbstractType
                 'entry_type' => MediaType::class,
                 'attr' => [
                     'class' => 'add_trick_gallery',
+                    'data-index' => 1,
                 ],
             ])
             ->add('submit', SubmitType::class)

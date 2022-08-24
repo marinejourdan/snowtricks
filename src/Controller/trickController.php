@@ -42,7 +42,6 @@ class trickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $trick = $form->getData();
             $gallery = $trick->getGallery();
-
             foreach ($gallery as $media) {
                 if ('image' == $media->getType()) {
                     $uploadedFile = $media->getUploadedFile();
@@ -50,9 +49,6 @@ class trickController extends AbstractController
                         $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
                         $fileName = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
                         $media->setFileName($fileName);
-                        $media->setType('image');
-                        $media->setTrick($trick);
-
                         try {
                             $uploadedFile->move(
                                 'assets',
@@ -63,6 +59,8 @@ class trickController extends AbstractController
                         }
                     }
                 }
+
+                $media->setTrick($trick);
             }
             $em->persist($trick);
             $em->flush();

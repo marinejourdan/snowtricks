@@ -1,32 +1,31 @@
 {% extends "./base.html.twig" %}
-        {% block body %}
-            <div class="jumbotron ">
-                <div class="container">
-                    <div class="fond" >
-                    </div>
-                    <h1>Snowtricks <br> le meilleur du snowboard!</h1>
-                </div>
-                <a class="fa-solid fa-arrow-down-long fa-2xl" href="#loadMore" ></a>
+
+{% block body %}
+    <a class="fa-solid fa-arrow-down-long fa-2xl" id="flechebas" href="#loadMore" ></a>
+    <div class="jumbotron ">
+        <div class="container">
+            <div class="fond" >
             </div>
-            <div id="loadMore">
-                {% include 'loadMore.html.twig' %}
-            </div>
-            <button type="button" onclick="loadMore()">load more</button>
-        {% endblock %}
+            <h1>Snowtricks <br> le meilleur du snowboard!</h1>
+        </div>
+    </div>
+    <div id="loadMore">
+        {% include 'loadMore.html.twig' %}
+    </div>
+    <button type="button" onclick="loadMore()">load more</button>
+{% endblock %}
 
-        {% block javascript %}
+{% block javascript %}
+    <script>
+        let page = 1;
+        function loadMore(){
+            fetch('https://localhost:8000/moretricks?page='+page).then(function(data){
+                return data.text();
 
-        <script>
-            let page = 1;
-            function loadMore(){
-                fetch('https://localhost:8000/moretricks?page='+page).then(function(data){
-                    return data.text();
-
-                }).then(function (html){
-                    document.getElementById('loadMore').innerHTML+=html
-                    page++
-                })
-            }
-        </script>
-
-        {% endblock %}
+            }).then(function (html){
+                document.getElementById('loadMore').innerHTML+=html
+                page++
+            })
+        }
+    </script>
+{% endblock %}

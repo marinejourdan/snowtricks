@@ -1,16 +1,38 @@
 {% extends "./base.html.twig" %}
 {% block body %}
-    <h1> Ajouter un trick</h1>
-    {{ form_start(form) }}
-        {{ form_row(form.name) }}
-        {{ form_row(form.description) }}
-        {{ form_row(form.group) }}
-        {{ form_row(form.gallery) }}
-        <button type="button" class="add_item_link" data-collection-holder-class="add_trick_gallery">Ajouter un media</button>
-    {{ form_end(form) }}
+    <div class="container" id="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1> Ajouter/modifier un trick</h1>
+                {{ form_start(form) }}
+
+                    {{ form_row(form.name) }}
+                    {{ form_row(form.description) }}
+                    {{ form_row(form.group) }}
+
+                    <ul class="add_trick_gallery"
+                        data-index="{{ form.gallery|length > 0 ? form.gallery|last.vars.name + 1 : 0 }}"
+                        data-prototype="{{ form_widget(form.gallery.vars.prototype)|e('html_attr') }}"
+                    >
+                        {% for mediaform in form.gallery %}
+
+                            {{  form_row(mediaform) }}
+
+                        {% endfor %}
+
+                    </ul>
+
+                    <button type="button" class="add_item_link" data-collection-holder-class="add_trick_gallery">Ajouter un media</button>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
     <script type="text/javascript">
         const addFormToCollection = (e) => {
             const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+
             const item = document.createElement('li');
             item.innerHTML = collectionHolder
                 .dataset
@@ -20,6 +42,7 @@
                     collectionHolder.dataset.index
                 );
             collectionHolder.appendChild(item);
+            console.log(collectionHolder.dataset.index);
             collectionHolder.dataset.index++;
         };
         document
