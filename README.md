@@ -1,7 +1,6 @@
 # snowtricks
 Site communautaire de snowboard
-# snowtricks
-Site communautaire de snowboard
+
 
 #Présentation du blog
 
