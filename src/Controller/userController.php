@@ -24,7 +24,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class userController extends AbstractController
 {
     #[Route(path: '/connexion', name: 'connexion', methods: ['GET', 'POST'], schemes: ['https'])]
-    public function connexion(AuthenticationUtils $authenticationUtils, requestStack $requestStack)
+    public function Connexion(AuthenticationUtils $authenticationUtils, requestStack $requestStack)
     {
         $session = $requestStack->getSession();
         $session->get(name: 'username');
@@ -44,7 +44,7 @@ class userController extends AbstractController
     }
 
     #[Route(path: '/suscribe', name: 'suscribe', methods: ['GET', 'POST'], schemes: ['https'])]
-    public function suscribe(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer)
+    public function Suscribe(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -101,7 +101,7 @@ class userController extends AbstractController
     }
 
     #[Route(path: '/activate/{token}', name: 'activate', methods: ['GET'], schemes: ['https'])]
-    public function activate(Request $request, UserRepository $userRepo)
+    public function Activate(Request $request, UserRepository $userRepo)
     {
         $token = $request->get('token');
         // On verifie si un utilisateur a ce token
@@ -125,7 +125,7 @@ class userController extends AbstractController
     }
 
     #[Route(path: '/logout', name: 'deconnexion', methods: ['GET', 'POST'], schemes: ['https'])]
-    public function Logout()
+    public function LogOut()
     {
         return $this->redirectToRoute('index');
     }
@@ -177,7 +177,7 @@ class userController extends AbstractController
     }
 
     #[Route('/new-password/{token}', name: 'new-password', methods: ['GET', 'POST'], schemes: ['https']) ]
-    public function newPassword(Request $request, UserRepository $userRepo, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em)
+    public function NewPassword(Request $request, UserRepository $userRepo, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em)
     {
         $form = $this->createForm(NewPasswordType::class);
         $token = $request->get('token');

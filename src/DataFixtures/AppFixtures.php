@@ -50,15 +50,15 @@ class AppFixtures extends Fixture
 
         $media1 = new Media();
         $media1->setType('image');
-        $media1->setFileName('symbole_feministe-62ee79856b70a.jpg');
+        $media1->setFileName('5bbdaeb539354af84b944b7e2a3045d6-62ff9c0ee012d.jpg');
 
         $media2 = new Media();
         $media2->setType('image');
-        $media2->setFileName('logo.jpeg');
+        $media2->setFileName('272-foto-de-snowboard-62ff484a58ea0.jpg');
 
         $media3 = new Media();
         $media3->setType('image');
-        $media3->setFileName('symbole_feministe-62ee79856b70a.jpg');
+        $media3->setFileName('786-63036cccf1128.jpg');
 
         $trick_1 = new Trick();
         $trick_1->setName('indy');

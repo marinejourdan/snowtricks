@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class trickController extends AbstractController
 {
     #[Route(path: '/', name: 'index', methods: ['GET'], schemes: ['https'])]
-    public function getList()
+    public function GetList()
     {
         $repo = $this->getDoctrine()->getRepository(Trick::class);
         $tricks = $repo->findBy([], [], 5);
@@ -74,7 +74,7 @@ class trickController extends AbstractController
     }
 
     #[Route(path: '/trick/details/{slug}', name: 'trick', methods: ['GET|POST'], schemes: ['https'])]
-    public function getOne(Request $request, EntityManagerInterface $em)
+    public function GetOne(Request $request, EntityManagerInterface $em)
     {
         $slug = $request->get('slug');
         $trickRepo = $this->getDoctrine()->getRepository(Trick::class);
@@ -103,6 +103,9 @@ class trickController extends AbstractController
             $message->setCreationDate(new \DateTime());
             $em->persist($message);
             $em->flush();
+
+            return $this->redirect('/trick/details/'.$slug);
+
         }
 
         return $this->render('oneTrick.html.twig', [
@@ -115,7 +118,7 @@ class trickController extends AbstractController
 
     #[Route(path: '/trick/deleteMedia', name: 'delete', methods: ['GET|POST'], schemes: ['https'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function delete(Request $request, EntityManagerInterface $em)
+    public function Delete(Request $request, EntityManagerInterface $em)
     {
         $id = $request->get('id');
         $trick = $this->getDoctrine()->getRepository(Trick::class)->find($id);
@@ -140,11 +143,10 @@ class trickController extends AbstractController
     }
 
     #[Route(path: '/moretricks', name: 'moreTricks', methods: ['GET|POST'], schemes: ['https'])]
-    public function moreTricks(Request $request)
+    public function MoreTricks(Request $request)
     {
         $trickRepo = $this->getDoctrine()->getRepository(Trick::class);
         $page = $request->get('page');
-
         $limit = 5;
         $offset = 4 * $page - 1;
 

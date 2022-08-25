@@ -39,3 +39,4 @@ class mediaController extends AbstractController
         ]);
     }
 }
+
