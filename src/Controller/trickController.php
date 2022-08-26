@@ -14,10 +14,10 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class trickController extends AbstractController
+class TrickController extends AbstractController
 {
     #[Route(path: '/', name: 'index', methods: ['GET'], schemes: ['https'])]
-    public function GetList()
+    public function getList()
     {
         $repo = $this->getDoctrine()->getRepository(Trick::class);
         $tricks = $repo->findBy([], [], 5);
@@ -55,7 +55,7 @@ class trickController extends AbstractController
                                 $fileName
                             );
                         } catch (FileException $e) {
-                            exit('Erreur upload image');
+                            throw new \Exception('Unable to move file into assets directory.');
                         }
                     }
                 }
@@ -74,7 +74,7 @@ class trickController extends AbstractController
     }
 
     #[Route(path: '/trick/details/{slug}', name: 'trick', methods: ['GET|POST'], schemes: ['https'])]
-    public function GetOne(Request $request, EntityManagerInterface $em)
+    public function getOne(Request $request, EntityManagerInterface $em)
     {
         $slug = $request->get('slug');
         $trickRepo = $this->getDoctrine()->getRepository(Trick::class);
@@ -96,7 +96,7 @@ class trickController extends AbstractController
 
         if ($myForm->isSubmitted() && $myForm->isValid()) {
             $message = $myForm->getData();
-            if (null == $this->getUser()) {
+            if (null === $this->getUser()) {
                 return $this->redirectToRoute('connexion');
             }
             $message->setAuthor($this->getUser());
@@ -118,7 +118,7 @@ class trickController extends AbstractController
 
     #[Route(path: '/trick/deleteMedia', name: 'delete', methods: ['GET|POST'], schemes: ['https'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function Delete(Request $request, EntityManagerInterface $em)
+    public function delete(Request $request, EntityManagerInterface $em)
     {
         $id = $request->get('id');
         $trick = $this->getDoctrine()->getRepository(Trick::class)->find($id);
@@ -143,7 +143,7 @@ class trickController extends AbstractController
     }
 
     #[Route(path: '/moretricks', name: 'moreTricks', methods: ['GET|POST'], schemes: ['https'])]
-    public function MoreTricks(Request $request)
+    public function moreTricks(Request $request)
     {
         $trickRepo = $this->getDoctrine()->getRepository(Trick::class);
         $page = $request->get('page');

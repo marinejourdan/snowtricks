@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class messageController extends AbstractController
+class MessageController extends AbstractController
 {
     #[Route(path: '/addMessage', name: 'addMessage', methods: ['POST'], schemes: ['https'])]
     public function addMessage(Request $request)

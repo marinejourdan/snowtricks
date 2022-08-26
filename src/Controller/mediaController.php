@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class mediaController extends AbstractController
+class MediaController extends AbstractController
 {
     #[Route(path: '/deleteMedia/{id}', name: 'deleteMedia', methods: ['GET', 'POST'], schemes: ['https'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]

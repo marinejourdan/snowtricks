@@ -21,10 +21,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class userController extends AbstractController
+class UserController extends AbstractController
 {
     #[Route(path: '/connexion', name: 'connexion', methods: ['GET', 'POST'], schemes: ['https'])]
-    public function Connexion(AuthenticationUtils $authenticationUtils, requestStack $requestStack)
+    public function connexion(AuthenticationUtils $authenticationUtils, requestStack $requestStack)
     {
         $session = $requestStack->getSession();
         $session->get(name: 'username');
@@ -44,7 +44,7 @@ class userController extends AbstractController
     }
 
     #[Route(path: '/suscribe', name: 'suscribe', methods: ['GET', 'POST'], schemes: ['https'])]
-    public function Suscribe(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer)
+    public function suscribe(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -88,7 +88,7 @@ class userController extends AbstractController
             try {
                 $mailer->send($email);
             } catch (TransportExceptionInterface $e) {
-                exit('Erreur envoi email');
+                throw new \Exception('Unable to send email');
             }
             $this->addFlash('success', 'votre inscription a bien été prise en compte, un email de validation va vous être envoyé');
 
@@ -101,7 +101,7 @@ class userController extends AbstractController
     }
 
     #[Route(path: '/activate/{token}', name: 'activate', methods: ['GET'], schemes: ['https'])]
-    public function Activate(Request $request, UserRepository $userRepo)
+    public function activate(Request $request, UserRepository $userRepo)
     {
         $token = $request->get('token');
         // On verifie si un utilisateur a ce token
@@ -138,6 +138,7 @@ class userController extends AbstractController
             ->getForm();
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $user = $em->getRepository(User::class)->findOneByEmail($form->getData()['email']);
@@ -165,7 +166,7 @@ class userController extends AbstractController
             try {
                 $mailer->send($email);
             } catch (TransportExceptionInterface $e) {
-                dd('youhou');
+                throw new \Exception('Unable to send email');
             }
 
             return $this->redirectToRoute('connexion');
@@ -177,7 +178,7 @@ class userController extends AbstractController
     }
 
     #[Route('/new-password/{token}', name: 'new-password', methods: ['GET', 'POST'], schemes: ['https']) ]
-    public function NewPassword(Request $request, UserRepository $userRepo, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em)
+    public function newPassword(Request $request, UserRepository $userRepo, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em)
     {
         $form = $this->createForm(NewPasswordType::class);
         $token = $request->get('token');
