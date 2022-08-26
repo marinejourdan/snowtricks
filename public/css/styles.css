@@ -68,7 +68,6 @@ footer ul li {
 
 .fond {
     background: url(/assets/fond.jpg);
-    position: center;
     width: 90%; /* Il occupe toute la largeur de l'écran */
     height: 600px; /* On met ici la même hauteur que le jumbotron */
     top: 0;
@@ -151,9 +150,10 @@ footer ul li {
 ul{
     list-style: none;
 }
-{
-.row img
-    width:300px;
+
+
+.row img{
+    width:1300px;
 }
 .gallery-title{
     border-style: dashed;
@@ -167,8 +167,11 @@ ul{
     display: inline-block;
 }
 
-
-
+@media all and (min-width: 780px){
+    .btn-primary{
+        display: none;
+    }
+}
 
 
 
