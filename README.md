@@ -1,6 +1,7 @@
 # snowtricks
 Site communautaire de snowboard
 
+https://insight.symfony.com/projects/4d903bdc-dfa8-4040-91aa-61099d69345d/analyses/31
 
 #Présentation du blog
 
