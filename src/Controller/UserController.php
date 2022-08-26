@@ -70,7 +70,7 @@ class UserController extends AbstractController
                     $fileName
                 );
             } catch (FileException $e) {
-                exit('Erreur upload image');
+                throw new \Exception('Unable to move file into assets directory.');
             }
 
             $em->persist($user);
@@ -125,7 +125,7 @@ class UserController extends AbstractController
     }
 
     #[Route(path: '/logout', name: 'deconnexion', methods: ['GET', 'POST'], schemes: ['https'])]
-    public function LogOut()
+    public function logOut()
     {
         return $this->redirectToRoute('index');
     }
