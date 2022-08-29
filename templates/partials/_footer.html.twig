@@ -1,1 +1,21 @@
-<footer ></br>copyright@year</footer>
+<footer>
+    <div class="navbar-footer">
+            <ul class="footer">
+                <li class="nav-item active">
+                    <a class="fa fa-home fa-2xl" href="/"> </a>
+                </li>
+                <li class="nav-item">
+                    <a class="fas fa-user-plus fa-2xl " href="/suscribe"> </a>
+                </li>
+                {% if is_granted ('IS_AUTHENTICATED_FULLY')%}
+                    <li class="nav-item">
+                        <a class="nav-fa-solid fa-arrow-right-from-bracket fa-2xl " href="/logout"></a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="fa-solid fa-arrow-right-to-bracket fa-2xl " href="/connexion"></a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+</footer>

@@ -5,30 +5,37 @@ namespace App\Entity;
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
+#[UniqueEntity('name', 'slug')]
 class Trick
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private ?int $id;
 
     #[ORM\Column(type: 'string', length: 100)]
-    #[Asserts\NotBlank]private $name='prout';
+    #[Assert\NotBlank(message: 'trick.name.not_blank')]
+    private $name = '';
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\NotBlank(message: 'trick.description.not_blank')]
     private $description;
 
-    #[ORM\OneToMany(targetEntity: "Message", cascade: ["all"], fetch: "EAGER", mappedBy: "trick")]
+    #[ORM\OneToMany(targetEntity: 'Message', cascade: ['remove'], fetch: 'EAGER', mappedBy: 'trick')]
     private $messages;
 
-   #[ORM\OneToMany(targetEntity: "Media", cascade: ["all"], fetch: "EAGER", mappedBy: "trick")]
-    private $medias;
+    #[ORM\OneToMany(targetEntity: 'Media', cascade: ['persist', 'remove'], fetch: 'LAZY', mappedBy: 'trick')]
+    private $gallery;
 
-    #[ORM\ManyToOne(targetEntity: "group", cascade: ["all"], fetch: "EAGER", inversedBy: "tricks")]
+    #[ORM\ManyToOne(targetEntity: 'Group', fetch: 'EAGER', inversedBy: 'tricks')]
     private $group;
 
+    #[ORM\Column(type: 'string', length: 100)]
+    private $slug;
 
     public function getId(): ?int
     {
@@ -58,6 +65,7 @@ class Trick
 
         return $this;
     }
+
     public function getMessages(): ?Collection
     {
         return $this->messages;
@@ -70,18 +78,19 @@ class Trick
         return $this;
     }
 
-   public function getMedias(): ?Collection
-   {
-        return $this->medias;
-   }
-
-   public function setMedias(Collection $medias): self
+    public function getGallery(): ?Collection
     {
-       $this->medias = $medias;
-
-       return $this;
+        return $this->gallery;
     }
-        public function getGroup(): ?Group
+
+    public function setGallery(?Collection $gallery): self
+    {
+        $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    public function getGroup(): ?Group
     {
         return $this->group;
     }
@@ -93,4 +102,20 @@ class Trick
         return $this;
     }
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getFirstMedia()
+    {
+        return $this->getGallery()->first();
+    }
 }

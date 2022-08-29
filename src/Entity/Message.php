@@ -14,15 +14,16 @@ class Message
     private $id;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\NotBlank(message: 'message.content.not_blank')]
     private $content;
 
     #[ORM\Column(type: 'datetime')]
     private $creationDate;
 
-    #[ORM\ManyToOne(targetEntity: "User", cascade: ["all"], fetch: "EAGER", inversedBy: "messages")]
+    #[ORM\ManyToOne(targetEntity: 'User', fetch: 'EAGER', inversedBy: 'messages')]
     private $author;
 
-    #[ORM\ManyToOne(targetEntity: "Trick", cascade: ["all"], fetch: "EAGER", inversedBy: "messages")]
+    #[ORM\ManyToOne(targetEntity: 'Trick', fetch: 'EAGER', inversedBy: 'messages')]
     private $trick;
 
     public function getId(): ?int

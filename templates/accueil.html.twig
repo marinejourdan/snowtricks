@@ -1,28 +1,32 @@
 {% extends "./base.html.twig" %}
-        {% block body %}
-            <div id="fond">
-                <div id="contenu">Ici ton texte et ce que tu veux</div>
+
+{% block body %}
+    <a class="fa-solid fa-arrow-down-long fa-2xl" id="flechebas" href="#loadMore" ></a>
+    <div class="jumbotron ">
+        <div class="container">
+            <div class="fond" >
             </div>
+            <h1>Snowtricks <br> le meilleur du snowboard!</h1>
+        </div>
+    </div>
 
+    <div id="loadMore">
+        {% include 'loadMore.html.twig' %}
+    </div>
+    <button type="button" onclick="loadMore()">load more</button>
+{% endblock %}
 
-            <h1> Les tricks  </h1>
-            {% for trick in tricks %}
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">{{trick.name}}</h4>
-                                <h6 class="card-text">{{trick.description}}</h6>
-                                <p class="card-text"></p>
-                                <p class="card-text"></p>
-                                <a href="{{ path('trick', {'id' : trick.id}) }}" class="btn btn-primary">
-                                    Voir la figure
-                                </a>
-                                    <a class="nav-link" href={{ path('delete', {'id' : trick.id}) }}> supprimer une figure <span class="sr-only">(current)</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% endblock %}
+{% block javascript %}
+    <script>
+        let page = 1;
+        function loadMore(){
+            fetch('https://localhost:8000/moretricks?page='+page).then(function(data){
+                return data.text();
 
+            }).then(function (html){
+                document.getElementById('loadMore').innerHTML+=html
+                page++
+            })
+        }
+    </script>
+{% endblock %}
