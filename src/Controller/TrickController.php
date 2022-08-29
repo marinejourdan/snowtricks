@@ -88,7 +88,8 @@ class TrickController extends AbstractController
         $message->setTrick($trick);
         $messages = $repo->findBy(
             ['trick' => $trick],
-            ['creationDate' => 'desc']
+            ['creationDate' => 'desc'],
+            10, 0
         );
 
         $myForm = $this->createForm(MessageFormType::class, $message);

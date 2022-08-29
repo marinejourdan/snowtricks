@@ -1,48 +1,58 @@
 {% extends "./base.html.twig" %}
 {% block body %}
-<div class="container" id="fond_image_home">
+    <div class="container" id="fond_image_home">
+        <div class="row">
+            <div class="col-lg-12">
+                {% if is_granted ('IS_AUTHENTICATED_FULLY')%}
+                    <a class="fa-solid fa-trash-can" href={{ path('delete', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
+                    <a class="fa-solid  fa-pencil" href={{ path('update', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
+                    <a class="fa-solid fa-plus" href={{ path('add')}}> <span class="sr-only">(current)</span></a>
+                {% endif %}
+                {% if media1 is empty %}
+                    <img class="img-fluid" src="{{asset('assets/home_image.jpg')}}" width="2800" height="600">
+                {% else %}
+                    <img class="img-fluid" src="/assets/{{ media1.fileName }}" width="2800" height="600">
+                {% endif %}
 
-    <div class="row">
-
-        <div class="col-lg-12">
-
-            {% if is_granted ('IS_AUTHENTICATED_FULLY')%}
-                <a class="fa-solid fa-trash-can" href={{ path('delete', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
-                <a class="fa-solid  fa-pencil" href={{ path('update', {'id' : trick.id}) }}> <span class="sr-only">(current)</span></a>
-                <a class="fa-solid fa-plus" href={{ path('add')}}> <span class="sr-only">(current)</span></a>
-            {% endif %}
-
-            {% if media1 is empty %}
-                <img class="img-fluid" src="{{asset('assets/home_image.jpg')}}" width="2800" height="600">
-            {% else %}
-                <img class="img-fluid" src="/assets/{{ media1.fileName }}" width="2800" height="600">
-            {% endif %}
-            <!-- Section: Images -->
-            <div class="well text-center">
-                <h3 class="gallery-title">{{trick.name}} </h3>
-                <div class="col-md-12">{{trick.description}}</div>
-                <div class="row">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
-                        Bouton
-                    </button>
-                    <div class="collapse" id="collapse2">
-                    {% for media in trick.gallery %}
-                        <div class="col-lg-4">
-                            {% if media.type =='image' %}
-                                <img src="/assets/{{ media.fileName }}" class="w-100">
-                            {% else %}
-                                <iframe src="{{ media.videoUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            {% endif %}
+<!-- Section: Images -->
+                <div class="well text-center">
+                    <h3 class="gallery-title">{{trick.name}} </h3>
+                    <div class="col-md-12">{{trick.description}}</div>
+                    <div class="collapse-media">
+                        <div class="row">
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                                Voir les
+                            </button>
+                            <div class="collapse" id="collapse2">
+                                {% for media in trick.gallery %}
+                                    <div class="col-lg-4">
+                                        {% if media.type =='image' %}
+                                            <img src="/assets/{{ media.fileName }}" class="w-100">
+                                        {% else %}
+                                            <iframe src="{{ media.videoUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
-                    {% endfor %}
+                    </div>
+                    <div class="appear">
+                        <div class="row">
+                            {% for media in trick.gallery %}
+                                <div class="col-lg-4">
+                                    {% if media.type =='image' %}
+                                        <img src="/assets/{{ media.fileName }}" class="w-100">
+                                    {% else %}
+                                        <iframe src="{{ media.videoUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <h3 class="gallery-group">Groupe de figures: {{trick.group.name}} </h3>
                     </div>
                 </div>
-                <h3 class="gallery-group">Groupe de figures: {{trick.group.name}} </h3>
             </div>
-
         </div>
-    </div>
-
 
     {% if is_granted ('IS_AUTHENTICATED_FULLY')%}
         <div class="row">
@@ -57,21 +67,25 @@
         </div>
     {% endif %}
 
-    <div class="row">
-        {% for message in messages %}
-            <div class="col-lg-12 o-hidden border-0 shadow-lg my-5">
-                <div class="p-5">
-                    <div class="text-center">
-                        <img src="/assets/{{ message.author.avatar.fileName }}"  class="rounded-circle" style="width: 150px;"
-                             alt="Avatar" />
-                        <h3>{{ message.author }}</h3>
-                        <p>{{ message.content }}</p>
-                        <p>{{ message.creationDate|date("m/d/Y") }}</p>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+        <div id="loadMoreMsg">
+    {% include 'loadMoreMsg.html.twig' %}
+        </div>
+        <button type="button" onclick="loadMoreMsg()">load more</button>
     </div>
+        {% endblock %}
 
-</div>
-{% endblock %}
+    {% block javascript %}
+    <script>
+        let page = 1;
+        function loadMoreMsg(){
+        fetch('https://localhost:8000/loadMoreMsg?page='+page).then(function(data){
+            return data.text();
+
+        }).then(function (html){
+            document.getElementById('loadMoreMsg').innerHTML+=html
+            page++
+        })
+    }
+    </script>
+    {% endblock %}
+

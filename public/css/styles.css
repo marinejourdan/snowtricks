@@ -168,7 +168,12 @@ ul{
 }
 
 @media all and (min-width: 780px){
-    .btn-primary{
+    .collapse-media{
+        display: none;
+    }
+}
+@media all and (max-width: 780px){
+    .appear{
         display: none;
     }
 }

@@ -1,0 +1,15 @@
+<div class="row">
+    {% for message in messages %}
+        <div class="col-lg-12 o-hidden border-0 shadow-lg my-5">
+            <div class="p-5">
+                <div class="text-center">
+                    <img src="/assets/{{ message.author.avatar.fileName }}"  class="rounded-circle" style="width: 150px;"
+                         alt="Avatar" />
+                    <h3>{{ message.author }}</h3>
+                    <p>{{ message.content }}</p>
+                    <p>{{ message.creationDate|date("m/d/Y") }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

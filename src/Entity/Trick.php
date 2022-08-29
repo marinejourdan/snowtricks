@@ -19,7 +19,7 @@ class Trick
 
     #[ORM\Column(type: 'string', length: 100)]
     #[Assert\NotBlank(message: 'trick.name.not_blank')]
-    private $name = 'prout';
+    private $name = '';
 
     #[ORM\Column(type: 'text', nullable: true)]
     #[Assert\NotBlank(message: 'trick.description.not_blank')]
