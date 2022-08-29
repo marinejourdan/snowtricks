@@ -78,14 +78,14 @@
     <script>
         let page = 1;
         function loadMoreMsg(){
-        fetch('https://localhost:8000/loadMoreMsg?page='+page).then(function(data){
-            return data.text();
+            fetch('/loadMoreMsg?page='+page).then(function(data){
+                return data.text();
 
-        }).then(function (html){
-            document.getElementById('loadMoreMsg').innerHTML+=html
-            page++
-        })
-    }
+            }).then(function (html){
+                document.getElementById('loadMoreMsg').innerHTML+=html
+                page++
+            })
+        }
     </script>
     {% endblock %}
 

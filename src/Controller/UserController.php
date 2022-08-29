@@ -190,10 +190,11 @@ class UserController extends AbstractController
             throw $this->createNotFoundException('Cet utilisateur n\'existe pas');
         }
 
-            $form->handleRequest($request);
+        $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
-            $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
+            $formData = $form->getData();
+            $user->setPassword($passwordHasher->hashPassword($user, $formData['password']));
 
             $user->setToken('');
             $em->persist($user);
