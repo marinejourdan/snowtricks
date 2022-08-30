@@ -94,6 +94,15 @@ footer ul li {
     width:100px;
 }
 
+#loadMorebtn button{
+    background-color: #2c2c54;
+    color: yellow;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    width: 50%;
+    margin-bottom: 50px;
+    margin-left: 450px;
+
+}
 @media all and (max-width: 780px){
     .fond {
         background: url(/assets/logo2.jpg);
@@ -128,7 +137,7 @@ footer ul li {
 }
 
 .card-body img{
-    width: 300px;
+    width: 260px;
     height: 200px;
 }
 
@@ -178,6 +187,20 @@ ul{
     }
 }
 
+#loadMoreMsgbtn button{
+    background-color: #2c2c54;
+    color: yellow;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    width: 50%;
+    margin-bottom: 50px;
+    margin-left: 270px;
+
+}
+iframe{
+    width:350px;
+    height: 250px;
+    box-shadow:8px 8px 10px 0 rgba(0,0,0,0.5);
+}
 
 
 @media all and (max-width: 780px){

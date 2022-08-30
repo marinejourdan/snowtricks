@@ -23,10 +23,10 @@ class Media
     private ?User $user;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $fileName;
+    private ?string $fileName= null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $videoUrl;
+    private ?string $videoUrl= null;
 
     private $uploadedFile;
 

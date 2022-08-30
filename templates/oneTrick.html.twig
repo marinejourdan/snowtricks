@@ -29,7 +29,7 @@
                                         {% if media.type =='image' %}
                                             <img src="/assets/{{ media.fileName }}" class="w-100">
                                         {% else %}
-                                            <iframe src="{{ media.videoUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                            <iframe id="video-trick" class="embed-responsive-item" src="{{ media.videoUrl }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                         {% endif %}
                                     </div>
                                 {% endfor %}
@@ -68,10 +68,11 @@
     {% endif %}
 
         <div id="loadMoreMsg">
-    {% include 'loadMoreMsg.html.twig' %}
+            {% include 'loadMoreMsg.html.twig' %}
         </div>
-        <button type="button" onclick="loadMoreMsg()">load more</button>
-    </div>
+        <div id="loadMoreMsgbtn">
+            <button type="button" onclick="loadMoreMsg()">load more</button>
+         </div>
         {% endblock %}
 
     {% block javascript %}
